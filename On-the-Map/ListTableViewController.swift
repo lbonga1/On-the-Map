@@ -10,64 +10,57 @@ import UIKit
 
 class ListViewController: UITableViewController {
     
+// MARK: - Outlets
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet var postButton: UIBarButtonItem!
     @IBOutlet var logoutButton: UIBarButtonItem!
     @IBOutlet var closeButton: UIBarButtonItem!
     @IBOutlet var listView: UITableView!
     
-    
-    var locations = [StudentLocations]()
+// MARK: - Variables
+    var locations: [StudentLocations] = [StudentLocations]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set up bar button items.
         self.navigationItem.setRightBarButtonItems([refreshButton, postButton], animated: true)
     }
     
-//    override func viewWillAppear(animated: Bool) {
-//        
-//        ParseClient().getStudentLocations() { result in
-//            switch result {
-//            case let .Error(error):
-//                // display error message
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    let alertController = UIAlertController(title: "Could not fetch student locations", message: "Please tap refresh to try again.", preferredStyle: .Alert)
-//                    let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-//                    alertController.addAction(okAction)
-//                    self.presentViewController(alertController, animated: true, completion: nil)
-//                }
-//            default:
-//                self.listView.reloadData()
-//            }
-//        }
-//    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Loads tableView data.
+        self.getStudentLocations()
+    }
     
+// MARK: - Methods
+    
+    // Set up tableView cells.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        /* Get cell type */
         let cellReuseIdentifier = "Student List"
         let location = locations[indexPath.row]
         var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as! UITableViewCell
         
-        //
         let firstName = location.firstName
         let lastName = location.lastName
         let mediaURL = location.mediaURL
         
-        /* Set cell defaults */
         cell.textLabel!.text = "\(firstName) \(lastName)"
         cell.detailTextLabel?.text = mediaURL
         
-        //cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
+        cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
         
         return cell
     }
     
+    // Retrieves number of rows.
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
     
+    // Opens URL in browser when row is tapped.
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let location = locations[indexPath.row]
@@ -75,6 +68,38 @@ class ListViewController: UITableViewController {
         UIApplication.sharedApplication().openURL(NSURL(string: mediaURL)!)
         
     }
+    
+    // Retrieves student location data.
+    func getStudentLocations() {
+        OTMClient.sharedInstance().getStudentLocations { locations, errorString in
+            if let locations = locations {
+                self.locations = locations
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.listView.reloadData()
+                }
+            } else {
+                self.displayError("Error fetching locations", errorString: errorString!)
+            }
+        }
+    }
+    
+    // Displays error message alert view.
+    func displayError(title: String, errorString: String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
+            let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+// MARK: - Actions
+    
+    // Refreshes student location data.
+    @IBAction func refreshLocations(sender: AnyObject) {
+      self.getStudentLocations()
+    }
+    
     
     
 }

@@ -23,6 +23,7 @@
 		1A6B04571B61B6F0001FFE77 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B04561B61B6F0001FFE77 /* FBSDKCoreKit.framework */; };
 		1A6B04591B61B6F5001FFE77 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B04581B61B6F5001FFE77 /* FBSDKLoginKit.framework */; };
 		1A6B045B1B61B6FE001FFE77 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6B045A1B61B6FE001FFE77 /* Bolts.framework */; };
+		1AC596691B6408E200C1ADAD /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC596681B6408E200C1ADAD /* PostViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		1A6B04561B61B6F0001FFE77 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1A6B04581B61B6F5001FFE77 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		1A6B045A1B61B6FE001FFE77 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
+		1AC596681B6408E200C1ADAD /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				1A6B04291B619751001FFE77 /* LoginViewController.swift */,
+				1AC596681B6408E200C1ADAD /* PostViewController.swift */,
 				1A6B04471B619817001FFE77 /* MapViewController.swift */,
 				1A6B04491B619879001FFE77 /* ListTableViewController.swift */,
 			);
@@ -257,6 +260,7 @@
 				1A6B042A1B619751001FFE77 /* LoginViewController.swift in Sources */,
 				1A6B04481B619817001FFE77 /* MapViewController.swift in Sources */,
 				1A6B04531B619FC2001FFE77 /* UdacityConvenience.swift in Sources */,
+				1AC596691B6408E200C1ADAD /* PostViewController.swift in Sources */,
 				1A6B044C1B6198C1001FFE77 /* OTMClient.swift in Sources */,
 				1A6B04501B619917001FFE77 /* StudentLocations.swift in Sources */,
 				1A6B04281B619751001FFE77 /* AppDelegate.swift in Sources */,
@@ -465,6 +469,7 @@
 				1A6B04431B619751001FFE77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1A6B04441B619751001FFE77 /* Build configuration list for PBXNativeTarget "On-the-MapTests" */ = {
 			isa = XCConfigurationList;
@@ -473,6 +478,7 @@
 				1A6B04461B619751001FFE77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

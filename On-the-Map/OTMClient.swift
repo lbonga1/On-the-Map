@@ -14,14 +14,14 @@ class OTMClient : NSObject {
     /* Shared session */
     var session: NSURLSession
     
-    /* Authentication state */
-    //var sessionID : String? = nil
-    
     override init() {
         session = NSURLSession.sharedSession()
         super.init()
     }
     
+// MARK: - Methods
+    
+    // Get type network call.
     func taskForGETMethod(parameters: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -49,19 +49,18 @@ class OTMClient : NSObject {
         return task
     }
 
-    
-    func taskForPOSTMethod(parameters: [String: AnyObject], jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    // Post type network call.
+    func taskForPOSTMethod(parameters: [String: AnyObject], baseURL: String, jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         var parameters = [String: AnyObject]()
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = Constants.UdacityBaseURLSecure + OTMClient.escapedParameters(parameters)
+        let urlString = baseURL + OTMClient.escapedParameters(parameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         var jsonifyError: NSError? = nil
         request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
         
@@ -72,7 +71,14 @@ class OTMClient : NSObject {
             if let error = downloadError {
                 completionHandler(result: nil, error: downloadError)
             } else {
-                OTMClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+                let newData : NSData?
+                
+                if baseURL.rangeOfString(Constants.UdacityBaseURLSecure) != nil{
+                    newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+                }else{
+                    newData = data
+                }
+                OTMClient.parseJSONWithCompletionHandler(newData!, completionHandler: completionHandler)
             }
         }
         
@@ -83,7 +89,7 @@ class OTMClient : NSObject {
     }
     
         
-    // MARK: - Helpers
+// MARK: - Helpers
     
     /* Helper function: Given a dictionary of parameters, convert to a string for a url */
     class func escapedParameters(parameters: [String : AnyObject]) -> String {
@@ -108,19 +114,16 @@ class OTMClient : NSObject {
     
     /* Helper: Given raw JSON, return a usable Foundation object */
     class func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
-        let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+        
         var parsingError: NSError? = nil
-        if let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)as? NSDictionary {
-            if let session = parsedResult["session"] as? NSDictionary {
-                let sessionID = session["id"] as! String
-            }
-            if let error = parsingError {
-                completionHandler(result: nil, error: parsingError)
-                println(parsingError)
-            } else {
-                println(parsedResult)
-                completionHandler(result: parsedResult as! [String: AnyObject], error: nil)
-            }
+        let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)as? NSDictionary
+        
+        if let error = parsingError {
+            completionHandler(result: nil, error: parsingError)
+            println(parsingError)
+        } else {
+            println(parsedResult)
+            completionHandler(result: parsedResult as! [String: AnyObject], error: nil)
         }
     }
     
@@ -133,7 +136,7 @@ class OTMClient : NSObject {
         }
     }
     
-    // MARK: - Shared Instance
+// MARK: - Shared Instance
     
     class func sharedInstance() -> OTMClient {
         

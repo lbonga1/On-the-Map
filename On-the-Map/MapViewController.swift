@@ -12,11 +12,16 @@ import FBSDKCoreKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
+// MARK: - Outlets
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var logoutButton: UIBarButtonItem!
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet var postButton: UIBarButtonItem!
     @IBOutlet var closeButton: UIBarButtonItem!
+    
+// MARK: - Variables
+    var locations: [StudentLocations] = [StudentLocations]()
+    var annotations = [MKPointAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +34,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         self.navigationItem.setRightBarButtonItems([refreshButton, postButton], animated: true)
-        
-        self.getStudentLocations()
-    
     }
     
-    // MARK: - MKMapViewDelegate
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Gets student locations.
+        self.getStudentLocations()
+        println(locations.count)
+    }
     
-    // Here we create a view with a "right callout accessory view". You might choose to look into other
-    // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
-    // method in TableViewDataSource.
+// MARK: - MKMapViewDelegate
+    
+    // Creates a view with a "right callout accessory view".
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         
         let reuseId = "pin"
@@ -58,8 +66,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
-    // This delegate method is implemented to respond to taps. It opens the system browser
-    // to the URL specified in the annotationViews subtitle property.
+    // Opens the pin's URL in browser when tapped.
     func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         if control == annotationView.rightCalloutAccessoryView {
@@ -68,83 +75,85 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+// MARK: - Additional methods
+    
+    // Gets student location pins.
     func getStudentLocations() {
-        OTMClient.sharedInstance().getStudentLocations { (success, errorString) -> Void in
-            if (success != nil) {
+        OTMClient.sharedInstance().getStudentLocations { locations, errorString -> Void in
+            if let locations = locations {
+                self.locations = locations
                 self.displayMap()
             } else {
-                self.displayError(errorString!)
+                self.displayError("Error fetching locations", errorString: errorString!)
             }
         }
     }
     
-    func displayError(errorString: String) {
+    // Displays error message alert view.
+    func displayError(title: String, errorString: String) {
         dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title: "Could not fetch student locations.", message: errorString, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
             let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
             alertController.addAction(okAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
-
+    
+    // Add annotations to the map.
     func displayMap() {
         dispatch_async(dispatch_get_main_queue()) {
-            var locations = [StudentLocations]()
-            var annotations = [MKPointAnnotation]()
         
-            for dictionary in locations {
+            for dictionary in self.locations {
             
-                // Notice that the float values are being used to create CLLocationDegree values.
-                // This is a version of the Double type.
                 let lat = CLLocationDegrees(dictionary.latitude as Double)
                 let long = CLLocationDegrees(dictionary.longitude as Double)
             
-                // The lat and long are used to create a CLLocationCoordinates2D instance.
+                // Create a CLLocationCoordinates2D instance.
                 let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
             
                 let first = dictionary.firstName as String
                 let last = dictionary.lastName as String
                 let mediaURL = dictionary.mediaURL as String
             
-                // Here we create the annotation and set its coordiate, title, and subtitle properties
+                // Create the annotation and set its properties.
                 var annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
                 annotation.title = "\(first) \(last)"
                 annotation.subtitle = mediaURL
             
-                // Finally we place the annotation in an array of annotations.
-                annotations.append(annotation)
+                // Place the annotation in an array of annotations.
+                self.annotations.append(annotation)
             }
         
-            // When the array is complete, we add the annotations to the map.
-            self.mapView.addAnnotations(annotations)
+            // Add the annotations to the map.
+            self.mapView.addAnnotations(self.annotations)
         }
     }
     
-    //MARK: - Actions:
+// MARK: - Actions:
+    
+    // Refresh student location pins.
+    @IBAction func refreshMap(sender: AnyObject) {
+        self.getStudentLocations()
+    }
+    
     
     // Returns user to Login View.
     @IBAction func returnToLoginVC(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Logs user out of Udacity.
-    //    @IBAction func userLogout(sender: AnyObject) {
-    //        OTMClient.sharedInstance().udacityLogout({ (success: Bool, error: String?) -> Void in
-    //            println("logging out")
-    //            if error != nil {
-    //                println("display error")
-    //                dispatch_async(dispatch_get_main_queue()) {
-    //                    let alertController = UIAlertController(title: "Network error", message: "Please check your network connection and try again.", preferredStyle: .Alert)
-    //                    let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-    //                        alertController.addAction(okAction)
-    //                    self.presentViewController(alertController, animated: true, completion: nil)
-    //                }
-    //                    return
-    //            }
-    //        })
-    //        self.dismissViewControllerAnimated(true, completion: nil)
-    //    }
+     // Logs user out of Udacity.
+    @IBAction func userLogout(sender: AnyObject) {
+        OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
+            println("logging out")
+            if success {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
+            }
+        }
+    }
 }
 
 

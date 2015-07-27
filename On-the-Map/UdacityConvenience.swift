@@ -10,24 +10,29 @@ import Foundation
 import UIKit
 
 extension OTMClient {
-   
+    
+    // Login to Udacity.
     func udacityLogin(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         var parameters = [String: AnyObject]()
         
         let jsonBody = ["udacity": ["username" : username, "password" : password]]
         
+        let baseURL = Constants.UdacityBaseURLSecure
+        
+        let request = NSMutableURLRequest()
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
         /* 2. Make the request */
-        self.taskForPOSTMethod(parameters, jsonBody: jsonBody, completionHandler: { (result, error) -> Void in
-            var results = NSData()
+        self.taskForPOSTMethod(parameters, baseURL: baseURL, jsonBody: jsonBody, completionHandler: { (result, error) -> Void in
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 completionHandler(success: false, errorString: "Please check your network connection and try again.")
-                println("Unsuccessful")
             } else {
-                if let accountDictionary = result["session"] as? NSDictionary {
-                    completionHandler(success: true, errorString: "successful")
-                    println("Success")
+                if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
+                    if let results = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.Registered) as? Int {
+                            completionHandler(success: true, errorString: "successful")
+                    }
                 } else {
                     completionHandler(success: false, errorString: "Username or password is incorrect.")
                     println("Could not find \(JsonResponseKeys.Account) in \(result)")
@@ -36,6 +41,7 @@ extension OTMClient {
         })
     }
     
+    // Logout of Udacity.
     func udacityLogout(completionHandler: (success: Bool, error: String?) -> Void) {
         let request = NSMutableURLRequest(URL: NSURL(string: OTMClient.Constants.UdacityBaseURLSecure)!)
         request.HTTPMethod = "DELETE"
@@ -50,13 +56,12 @@ extension OTMClient {
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
-                println("received error")
+                completionHandler(success: false, error: "Could not logout.")
                 return
             }
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             println(NSString(data: newData, encoding: NSUTF8StringEncoding))
         }
-        println("completing logout")
         task.resume()
     }
 

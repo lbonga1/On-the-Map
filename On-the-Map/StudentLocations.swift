@@ -11,16 +11,16 @@ import MapKit
 
 struct StudentLocations {
     
-    let createdAt: String
-    let firstName: String
-    let lastName: String
-    let latitude: Double
-    let longitude: Double
-    let mapString: String
-    let mediaURL: String
-    let objectID: String
-    let uniqueKey: String
-    let updatedAt: String
+    var createdAt = ""
+    var firstName = ""
+    var lastName = ""
+    var latitude = 0.0
+    var longitude = 0.0
+    var mapString = ""
+    var mediaURL = ""
+    var objectID = ""
+    var uniqueKey = ""
+    var updatedAt = ""
     
     //Construct a StudentLocation from a dictionary
     init(dictionary: [String : AnyObject]) {

@@ -12,7 +12,7 @@ import FBSDKLoginKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
-    // Mark: - Outlets
+// Mark: - Outlets
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var loginView: FBSDKLoginButton!
     
-    // Mark: - Variables
+// Mark: - Variables
     var appDelegate: AppDelegate!
     var session: NSURLSession!
     var backgroundGradient: CAGradientLayer? = nil
@@ -37,10 +37,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         //self.loginView.delegate = self
     }
     
+// MARK: - Actions
+    
     // Sign up if user does not have an account.
     @IBAction func signUp(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.google.com/url?q=https%3A%2F%2Fwww.udacity.com%2Faccount%2Fauth%23!%2Fsignin&sa=D&sntz=1&usg=AFQjCNERmggdSkRb9MFkqAW_5FgChiCxAQ")!)
     }
+    
     // Login button action
     @IBAction func userLogin(sender: AnyObject) {
         if usernameField.text.isEmpty {
@@ -57,6 +60,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             })
         }
     }
+
+// MARK: - Additional methods
     
     // Clears text fields and gets MapViewController.
     func completeLogin() {
