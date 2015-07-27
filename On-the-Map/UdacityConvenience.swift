@@ -51,7 +51,7 @@ extension OTMClient {
             if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
         }
         if let xsrfCookie = xsrfCookie {
-            request.addValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-Token")
+            request.setValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
@@ -61,6 +61,7 @@ extension OTMClient {
             }
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             println(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            completionHandler(success: true, error: nil)
         }
         task.resume()
     }
