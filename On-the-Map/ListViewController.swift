@@ -102,6 +102,14 @@ class ListViewController: UITableViewController {
     
 // MARK: - Actions
     
+    // Gets post view controller.
+    @IBAction func postUserLocation(sender: AnyObject) {
+        let storyboard = self.storyboard
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+        
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
+    
     // Refreshes student location data.
     @IBAction func refreshLocations(sender: AnyObject) {
       self.getStudentLocations()

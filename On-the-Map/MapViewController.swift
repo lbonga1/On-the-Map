@@ -132,6 +132,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
 // MARK: - Actions:
     
+    // Gets post view controller
+    @IBAction func postUserLocation(sender: AnyObject) {
+        let storyboard = self.storyboard
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+        
+        self.presentViewController(controller, animated: true, completion: nil)
+        
+//        OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
+//            if success {
+//                let storyboard = self.storyboard
+//                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+//        
+//                self.presentViewController(controller, animated: true, completion: nil)
+//            } else {
+//                self.displayError("Could not handle request.", errorString: error)
+//            }
+//        }
+    }
+        
     // Refresh student location pins.
     @IBAction func refreshMap(sender: AnyObject) {
         self.getStudentLocations()

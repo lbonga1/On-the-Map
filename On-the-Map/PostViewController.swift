@@ -12,7 +12,6 @@ import MapKit
 class PostViewController: UIViewController {
     
 // MARK: -Outlets
-    
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var section1: UIView!
@@ -21,12 +20,15 @@ class PostViewController: UIViewController {
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var studyingLabel: UILabel!
+    @IBOutlet weak var linkTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        // Set up UI.
         self.mapView.hidden = true
         self.submitButton.hidden = true
+        self.linkTextField.hidden = true
     }
 
     
@@ -46,11 +48,15 @@ class PostViewController: UIViewController {
         })
     }
     
+    // Dismiss post view controller
     @IBAction func cancelPost(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
+//    @IBAction func postLocation(sender: AnyObject) {
+//        if linkTextField.text != "" {
+//        }
+//    }
 
 // MARK: - Additional methods
     
@@ -64,12 +70,14 @@ class PostViewController: UIViewController {
         }
     }
 
+    // Sets up UI after geocoding location.
     func makeSecondView() {
         self.mapView.hidden = false
         self.submitButton.hidden = false
         self.section2.hidden = true
         self.section3.hidden = true
-        self.studyingLabel.hidden = true
+        self.studyingLabel.text = "Enter a link to share:"
+        self.linkTextField.hidden = false
         self.findButton.hidden = true
         self.section1.backgroundColor = UIColor(red: 0.325, green: 0.318, blue: 0.529, alpha: 1)
     }

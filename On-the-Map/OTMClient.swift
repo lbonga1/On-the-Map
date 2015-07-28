@@ -22,13 +22,13 @@ class OTMClient : NSObject {
 // MARK: - Methods
     
     // Get type network call.
-    func taskForGETMethod(parameters: [String : AnyObject], baseURL: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETMethod(parameters: [String : AnyObject], baseURL: String, method: String, key: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         var parameters = [String: AnyObject]()
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = baseURL + OTMClient.escapedParameters(parameters)
+        let urlString = baseURL + method + key + OTMClient.escapedParameters(parameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         
@@ -50,13 +50,13 @@ class OTMClient : NSObject {
     }
 
     // Post type network call.
-    func taskForPOSTMethod(parameters: [String: AnyObject], baseURL: String, jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPOSTMethod(parameters: [String: AnyObject], baseURL: String, method: String, jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         var parameters = [String: AnyObject]()
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = baseURL + OTMClient.escapedParameters(parameters)
+        let urlString = baseURL + method + OTMClient.escapedParameters(parameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         var jsonifyError: NSError? = nil

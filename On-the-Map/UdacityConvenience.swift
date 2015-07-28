@@ -15,24 +15,23 @@ extension OTMClient {
     func udacityLogin(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         var parameters = [String: AnyObject]()
-        
         let jsonBody = ["udacity": ["username" : username, "password" : password]]
-        
         let baseURL = Constants.UdacityBaseURLSecure
+        let method = Methods.UdacitySession
         
         let request = NSMutableURLRequest()
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         /* 2. Make the request */
-        self.taskForPOSTMethod(parameters, baseURL: baseURL, jsonBody: jsonBody, completionHandler: { (result, error) -> Void in
+        self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody, completionHandler: { (result, error) -> Void in
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 completionHandler(success: false, errorString: "Please check your network connection and try again.")
             } else {
                 if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
-                    if let results = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.Registered) as? Int {
+                        if let results = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.UserID) as? String {
                             completionHandler(success: true, errorString: "successful")
-                    }
+                        }
                 } else {
                     completionHandler(success: false, errorString: "Username or password is incorrect.")
                     println("Could not find \(JsonResponseKeys.Account) in \(result)")
@@ -41,9 +40,39 @@ extension OTMClient {
         })
     }
     
+    // Get user's public data from Udacity.
+    func getUserData(completionHandler: (success: Bool, error: String) -> Void) {
+        
+        var parameters = [String: AnyObject]()
+        let baseURL = Constants.UdacityBaseURLSecure
+        let method = Methods.UdacityData
+        let key = OTMClient.JsonResponseKeys.UserID
+        
+        self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                println("user data error 1")
+                completionHandler(success: false, error: "Please check your network connection and try again.")
+            } else {
+                if let userDictionary = result.valueForKey(OTMClient.JsonResponseKeys.User) as? NSDictionary {
+                    if let firstName = result.valueForKey(OTMClient.JsonResponseKeys.UserFirstName) as? String {
+                        if let lastName = result.valueForKey(OTMClient.JsonResponseKeys.UserLastName) as? String {
+                            completionHandler(success: true, error: "successful")
+                            println("Success, user data")
+                        }
+                    }
+                } else {
+                    println("user data error 2")
+                    completionHandler(success: false, error: "Please try again.")
+                }
+            }
+        }
+    }
+    
     // Logout of Udacity.
     func udacityLogout(completionHandler: (success: Bool, error: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: OTMClient.Constants.UdacityBaseURLSecure)!)
+        let method = Methods.UdacitySession
+        let request = NSMutableURLRequest(URL: NSURL(string: OTMClient.Constants.UdacityBaseURLSecure + method)!)
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
