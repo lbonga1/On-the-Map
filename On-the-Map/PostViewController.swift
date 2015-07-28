@@ -34,13 +34,12 @@ class PostViewController: UIViewController {
     
     // Locates the address provided by user and adds a pin to the map.
     @IBAction func findLocation(sender: AnyObject) {
+        self.makeSecondView()
         var location = locationTextField.text
         var geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
             if let placemark = placemarks?[0] as? CLPlacemark {
                 self.mapView.addAnnotation(MKPlacemark(placemark: placemark))
-                self.makeSecondView()
-                
             } else {
                 self.displayError("Could not find location", errorString: "Please try again.")
             }
