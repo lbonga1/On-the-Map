@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKCoreKit
 
 class ListViewController: UITableViewController {
     
@@ -24,6 +25,12 @@ class ListViewController: UITableViewController {
         super.viewDidLoad()
         
         // Set up bar button items.
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            navigationItem.leftBarButtonItem = closeButton
+        } else {
+            navigationItem.leftBarButtonItem = logoutButton
+        }
+        
         self.navigationItem.setRightBarButtonItems([refreshButton, postButton], animated: true)
     }
     
@@ -100,6 +107,20 @@ class ListViewController: UITableViewController {
       self.getStudentLocations()
     }
     
+    // Logout of Udacity.
+    @IBAction func udacityLogout(sender: AnyObject) {
+        OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
+            if success {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
+            }
+        }
+    }
     
+    // Returns to Login View.
+    @IBAction func returnToLoginVC(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
 }

@@ -14,7 +14,7 @@
 		1A6B04321B619751001FFE77 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6B04301B619751001FFE77 /* LaunchScreen.xib */; };
 		1A6B043E1B619751001FFE77 /* On_the_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B043D1B619751001FFE77 /* On_the_MapTests.swift */; };
 		1A6B04481B619817001FFE77 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04471B619817001FFE77 /* MapViewController.swift */; };
-		1A6B044A1B619879001FFE77 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04491B619879001FFE77 /* ListTableViewController.swift */; };
+		1A6B044A1B619879001FFE77 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04491B619879001FFE77 /* ListViewController.swift */; };
 		1A6B044C1B6198C1001FFE77 /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B044B1B6198C1001FFE77 /* OTMClient.swift */; };
 		1A6B044E1B6198E4001FFE77 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B044D1B6198E4001FFE77 /* OTMConstants.swift */; };
 		1A6B04501B619917001FFE77 /* StudentLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B044F1B619917001FFE77 /* StudentLocations.swift */; };
@@ -48,7 +48,7 @@
 		1A6B043C1B619751001FFE77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A6B043D1B619751001FFE77 /* On_the_MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_MapTests.swift; sourceTree = "<group>"; };
 		1A6B04471B619817001FFE77 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		1A6B04491B619879001FFE77 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		1A6B04491B619879001FFE77 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		1A6B044B1B6198C1001FFE77 /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		1A6B044D1B6198E4001FFE77 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		1A6B044F1B619917001FFE77 /* StudentLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocations.swift; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 				1A6B04291B619751001FFE77 /* LoginViewController.swift */,
 				1AC596681B6408E200C1ADAD /* PostViewController.swift */,
 				1A6B04471B619817001FFE77 /* MapViewController.swift */,
-				1A6B04491B619879001FFE77 /* ListTableViewController.swift */,
+				1A6B04491B619879001FFE77 /* ListViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -265,7 +265,7 @@
 				1A6B04501B619917001FFE77 /* StudentLocations.swift in Sources */,
 				1A6B04281B619751001FFE77 /* AppDelegate.swift in Sources */,
 				1A6B04551B61A605001FFE77 /* ParseConvenience.swift in Sources */,
-				1A6B044A1B619879001FFE77 /* ListTableViewController.swift in Sources */,
+				1A6B044A1B619879001FFE77 /* ListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

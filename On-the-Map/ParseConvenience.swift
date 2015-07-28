@@ -17,6 +17,8 @@ extension OTMClient {
         /* 1. Set the parameters */
         let parameters = [String: AnyObject]()
         
+        let baseURL = Constants.ParseBaseURLSecure
+        
         let parseID = Constants.ParseAppID
         let parseKey = Constants.ParseAPIKey
         
@@ -26,7 +28,7 @@ extension OTMClient {
         request.addValue(parseKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 
         
-        self.taskForGETMethod(parameters) { result, error in
+        self.taskForGETMethod(parameters, baseURL: baseURL) { result, error in
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 println("error 1")

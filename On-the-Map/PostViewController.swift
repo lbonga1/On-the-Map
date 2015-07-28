@@ -12,18 +12,21 @@ import MapKit
 class PostViewController: UIViewController {
     
 // MARK: -Outlets
-    @IBOutlet weak var firstView: UIView!
-    @IBOutlet weak var secondView: UIView!
-    @IBOutlet weak var thirdView: UIView!
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var studyingLabel: UILabel!
-    @IBOutlet weak var enterLocationLabel: UILabel!
-    @IBOutlet weak var postButton: UIButton!
+    
     @IBOutlet weak var locationTextField: UITextField!
-
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var section1: UIView!
+    @IBOutlet weak var section2: UIView!
+    @IBOutlet weak var section3: UIView!
+    @IBOutlet weak var findButton: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var studyingLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
+        self.mapView.hidden = true
+        self.submitButton.hidden = true
     }
 
     
@@ -36,20 +39,18 @@ class PostViewController: UIViewController {
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
             if let placemark = placemarks?[0] as? CLPlacemark {
                 self.mapView.addAnnotation(MKPlacemark(placemark: placemark))
+                self.makeSecondView()
                 
-                self.secondView.hidden = true
-                self.thirdView.hidden = true
-                
-//                //Zoom in to the results
-//                let extent = self.graphicLayer.fullEnvelope.mutableCopy() as AGSMutableEnvelope
-//                extent.expandByFactor(1.5)
-//                self.mapView.zoomToEnvelope(extent, animated: true)
             } else {
                 self.displayError("Could not find location", errorString: "Please try again.")
             }
         })
-    
     }
+    
+    @IBAction func cancelPost(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
 
 // MARK: - Additional methods
@@ -64,6 +65,14 @@ class PostViewController: UIViewController {
         }
     }
 
-
+    func makeSecondView() {
+        self.mapView.hidden = false
+        self.submitButton.hidden = false
+        self.section2.hidden = true
+        self.section3.hidden = true
+        self.studyingLabel.hidden = true
+        self.findButton.hidden = true
+        self.section1.backgroundColor = UIColor(red: 0.325, green: 0.318, blue: 0.529, alpha: 1)
+    }
 
 }

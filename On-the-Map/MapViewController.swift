@@ -146,9 +146,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      // Logs user out of Udacity.
     @IBAction func userLogout(sender: AnyObject) {
         OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
-            println("logging out")
             if success {
-                println("complete logout and dismiss")
                 self.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
