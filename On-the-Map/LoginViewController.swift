@@ -77,11 +77,19 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         println("User Logged In")
         if ((error) != nil) {
-            // Process error
+            println("facebook error")
         } else if result.isCancelled {
-            // Handle cancellations
+            println("cancelled")
         } else {
-            self.getTabController()
+            println("test")
+            NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString! , forKey: "FBAccessToken")
+            OTMClient.sharedInstance().loginWithFacebook { success, errorString in
+                if success {
+                    self.getTabController()
+                } else {
+                    self.displayError(errorString!)
+                }
+            }
         }
     }
     

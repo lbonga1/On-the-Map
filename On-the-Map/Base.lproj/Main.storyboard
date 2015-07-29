@@ -136,6 +136,17 @@
                                             </mask>
                                         </variation>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EF-UQ-hO7" customClass="FBSDKLoginButton">
+                                        <rect key="frame" x="38" y="530" width="300" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="43T-wd-32K"/>
+                                            <constraint firstAttribute="width" constant="300" id="l4G-a1-MRZ"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="facebookLogin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TgD-PF-ZzV"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254901959999995" green="0.51372549020000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -176,6 +187,7 @@
                                     <constraint firstItem="X8l-lm-3H6" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="43" id="YEs-g1-gcf"/>
                                     <constraint firstAttribute="trailing" secondItem="nzk-uW-MDD" secondAttribute="trailing" constant="177" id="ZJ8-99-B3X"/>
                                     <constraint firstAttribute="bottom" secondItem="iOe-N3-ncg" secondAttribute="bottom" constant="150" id="Zej-qR-vm8"/>
+                                    <constraint firstItem="1EF-UQ-hO7" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="a1v-nB-gxL"/>
                                     <constraint firstAttribute="trailing" secondItem="tnp-v6-AgU" secondAttribute="trailing" constant="177" id="aEN-T8-3tH"/>
                                     <constraint firstItem="nzk-uW-MDD" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="aSn-WO-l4K"/>
                                     <constraint firstItem="tnp-v6-AgU" firstAttribute="top" secondItem="7TO-3x-dIv" secondAttribute="bottom" constant="8" id="bsg-Mo-LI3"/>
@@ -202,6 +214,7 @@
                                     <constraint firstItem="rdN-mb-Rm1" firstAttribute="top" secondItem="nzk-uW-MDD" secondAttribute="bottom" constant="35" id="r9i-WY-uzJ"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="top" secondItem="tnp-v6-AgU" secondAttribute="bottom" constant="8" id="rk0-p3-kdU"/>
                                     <constraint firstItem="7TO-3x-dIv" firstAttribute="top" secondItem="X8l-lm-3H6" secondAttribute="bottom" constant="10" id="s6B-En-vs1"/>
+                                    <constraint firstAttribute="bottom" secondItem="1EF-UQ-hO7" secondAttribute="bottom" constant="30" id="sj1-1R-ugg"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="top" secondItem="tnp-v6-AgU" secondAttribute="bottom" constant="8" id="uB8-Aq-9V2"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="top" secondItem="tnp-v6-AgU" secondAttribute="bottom" constant="10" id="ue2-dz-bA8"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X8l-lm-3H6" secondAttribute="trailing" constant="177" id="vIl-Km-tpM"/>

@@ -14,6 +14,9 @@ class OTMClient : NSObject {
     /* Shared session */
     var session: NSURLSession
     
+    // Authentication state
+    var userID : Int? = nil
+    
     override init() {
         session = NSURLSession.sharedSession()
         super.init()
@@ -28,7 +31,7 @@ class OTMClient : NSObject {
         var parameters = [String: AnyObject]()
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = baseURL + method + key + OTMClient.escapedParameters(parameters)
+        let urlString = baseURL + method + key
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         

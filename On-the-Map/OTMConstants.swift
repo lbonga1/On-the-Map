@@ -27,6 +27,10 @@ extension OTMClient {
         //static let Registered = "registered"
         static let UserID = "key"
         
+        // Facebook Login
+        static let FBAccount = "account"
+        static let Key = "key"
+        
         // Udacity User
         static let User = "user"
         static let UserFirstName = "first_name"
