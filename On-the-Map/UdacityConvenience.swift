@@ -90,7 +90,11 @@ extension OTMClient {
         let method = Methods.UdacityData
         let key = NSUserDefaults.standardUserDefaults().stringForKey("UdacityUserID")!
         
-        self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in
+        let urlString = baseURL + method + key
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        
+        self.taskForGETMethod(parameters, request: request) { result, error in
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 println("user data error 1")

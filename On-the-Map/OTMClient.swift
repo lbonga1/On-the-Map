@@ -25,15 +25,10 @@ class OTMClient : NSObject {
 // MARK: - Methods
     
     // Get type network call.
-    func taskForGETMethod(parameters: [String : AnyObject], baseURL: String, method: String, key: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETMethod(parameters: [String : AnyObject], request: NSURLRequest, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         var parameters = [String: AnyObject]()
-        
-        /* 2/3. Build the URL and configure the request */
-        let urlString = baseURL + method + key
-        let url = NSURL(string: urlString)!
-        let request = NSMutableURLRequest(URL: url)
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in

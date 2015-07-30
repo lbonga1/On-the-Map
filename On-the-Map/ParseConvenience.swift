@@ -24,13 +24,15 @@ extension OTMClient {
         let parseID = Constants.ParseAppID
         let parseKey = Constants.ParseAPIKey
         
-        /* 2. Configure the request */
-        let request = NSMutableURLRequest()
+        /* 2/3. Build the URL and configure the request */
+        let urlString = baseURL + method + key
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
         request.addValue(parseID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(parseKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 
         
-        self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in
+        self.taskForGETMethod(parameters, request: request) { result, error in
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 println("error 1")
