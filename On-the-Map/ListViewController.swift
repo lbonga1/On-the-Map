@@ -19,7 +19,7 @@ class ListViewController: UITableViewController {
     @IBOutlet var listView: UITableView!
     
 // MARK: - Variables
-    var locations: [StudentLocations] = [StudentLocations]()
+    var studentLocations = Data.sharedInstance().locations
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class ListViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         // Loads tableView data.
-        self.getStudentLocations()
+        listView.reloadData()
     }
     
 // MARK: - Methods
@@ -47,7 +47,7 @@ class ListViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cellReuseIdentifier = "Student List"
-        let location = locations[indexPath.row]
+        let location = studentLocations[indexPath.row]
         var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as! UITableViewCell
         
         let firstName = location.firstName
@@ -64,13 +64,16 @@ class ListViewController: UITableViewController {
     
     // Retrieves number of rows.
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        if studentLocations == nil {
+            self.getStudentLocations()
+        }
+        return studentLocations.count
     }
     
     // Opens URL in browser when row is tapped.
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let location = locations[indexPath.row]
+        let location = studentLocations[indexPath.row]
         let mediaURL = location.mediaURL
         UIApplication.sharedApplication().openURL(NSURL(string: mediaURL)!)
         
@@ -80,7 +83,7 @@ class ListViewController: UITableViewController {
     func getStudentLocations() {
         OTMClient.sharedInstance().getStudentLocations { locations, errorString in
             if let locations = locations {
-                self.locations = locations
+                self.studentLocations = locations
                 dispatch_async(dispatch_get_main_queue()) {
                     self.listView.reloadData()
                 }
@@ -104,10 +107,18 @@ class ListViewController: UITableViewController {
     
     // Gets post view controller.
     @IBAction func postUserLocation(sender: AnyObject) {
-        let storyboard = self.storyboard
-        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
-        
-        self.presentViewController(controller, animated: true, completion: nil)
+        OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
+            if success {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let storyboard = self.storyboard
+                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+                    
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
+            } else {
+                self.displayError("Could not handle request.", errorString: error)
+            }
+        }
     }
     
     // Refreshes student location data.

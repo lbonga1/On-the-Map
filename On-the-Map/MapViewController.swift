@@ -20,7 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var closeButton: UIBarButtonItem!
     
 // MARK: - Variables
-    var locations: [StudentLocations] = [StudentLocations]()
+    var locations = Data.sharedInstance().locations
     var annotations = [MKPointAnnotation]()
     
     override func viewDidLoad() {
@@ -133,13 +133,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // Gets post view controller
     @IBAction func postUserLocation(sender: AnyObject) {
-        
         OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
             if success {
+                dispatch_async(dispatch_get_main_queue()) {
                 let storyboard = self.storyboard
                 let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
         
                 self.presentViewController(controller, animated: true, completion: nil)
+                }
             } else {
                 self.displayError("Could not handle request.", errorString: error)
             }

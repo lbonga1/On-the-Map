@@ -10,6 +10,7 @@
 		1A4F63AC1B68261500CFE084 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4F63AB1B68261500CFE084 /* Bolts.framework */; };
 		1A4F63AE1B68261900CFE084 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4F63AD1B68261900CFE084 /* FBSDKCoreKit.framework */; };
 		1A4F63B01B68261C00CFE084 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4F63AF1B68261C00CFE084 /* FBSDKLoginKit.framework */; };
+		1A5B98BF1B6F35710050B635 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B98BE1B6F35710050B635 /* Data.swift */; };
 		1A6B04281B619751001FFE77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04271B619751001FFE77 /* AppDelegate.swift */; };
 		1A6B042A1B619751001FFE77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04291B619751001FFE77 /* LoginViewController.swift */; };
 		1A6B042D1B619751001FFE77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6B042B1B619751001FFE77 /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		1A4F63AB1B68261500CFE084 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		1A4F63AD1B68261900CFE084 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1A4F63AF1B68261C00CFE084 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		1A5B98BE1B6F35710050B635 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		1A6B04221B619751001FFE77 /* On-the-Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On-the-Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6B04261B619751001FFE77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A6B04271B619751001FFE77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A5B98BD1B6F352E0050B635 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1A6B044B1B6198C1001FFE77 /* OTMClient.swift */,
+				1A6B04541B61A605001FFE77 /* ParseConvenience.swift */,
+				1A6B04521B619FC2001FFE77 /* UdacityConvenience.swift */,
+				1A6B044D1B6198E4001FFE77 /* OTMConstants.swift */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 		1A6B04191B619751001FFE77 = {
 			isa = PBXGroup;
 			children = (
@@ -107,11 +120,9 @@
 			children = (
 				1A6B04271B619751001FFE77 /* AppDelegate.swift */,
 				1A6B04511B6199B6001FFE77 /* View Controllers */,
-				1A6B044B1B6198C1001FFE77 /* OTMClient.swift */,
-				1A6B04541B61A605001FFE77 /* ParseConvenience.swift */,
-				1A6B04521B619FC2001FFE77 /* UdacityConvenience.swift */,
-				1A6B044D1B6198E4001FFE77 /* OTMConstants.swift */,
+				1A5B98BD1B6F352E0050B635 /* Network */,
 				1A6B044F1B619917001FFE77 /* StudentLocations.swift */,
+				1A5B98BE1B6F35710050B635 /* Data.swift */,
 				1A6B042B1B619751001FFE77 /* Main.storyboard */,
 				1A6B042E1B619751001FFE77 /* Images.xcassets */,
 				1A6B04301B619751001FFE77 /* LaunchScreen.xib */,
@@ -260,6 +271,7 @@
 				1A6B042A1B619751001FFE77 /* LoginViewController.swift in Sources */,
 				1A6B04481B619817001FFE77 /* MapViewController.swift in Sources */,
 				1A6B04531B619FC2001FFE77 /* UdacityConvenience.swift in Sources */,
+				1A5B98BF1B6F35710050B635 /* Data.swift in Sources */,
 				1AC596691B6408E200C1ADAD /* PostViewController.swift in Sources */,
 				1A6B044C1B6198C1001FFE77 /* OTMClient.swift in Sources */,
 				1A6B04501B619917001FFE77 /* StudentLocations.swift in Sources */,

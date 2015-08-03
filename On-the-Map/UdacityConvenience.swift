@@ -97,8 +97,8 @@ extension OTMClient {
                 completionHandler(success: false, error: "Please check your network connection and try again.")
             } else {
                 if let userDictionary = result.valueForKey(OTMClient.JsonResponseKeys.User) as? NSDictionary {
-                    if let firstName = result.valueForKey(OTMClient.JsonResponseKeys.UserFirstName) as? String {
-                        if let lastName = result.valueForKey(OTMClient.JsonResponseKeys.UserLastName) as? String {
+                    if let firstName = userDictionary.valueForKey(OTMClient.JsonResponseKeys.UserFirstName) as? String {
+                        if let lastName = userDictionary.valueForKey(OTMClient.JsonResponseKeys.UserLastName) as? String {
                             completionHandler(success: true, error: "successful")
                             println("Success, user data")
                         }
@@ -136,7 +136,6 @@ extension OTMClient {
                 return
             }
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            println(NSString(data: newData, encoding: NSUTF8StringEncoding))
             completionHandler(success: true, error: nil)
         }
         task.resume()

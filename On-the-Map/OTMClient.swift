@@ -53,7 +53,7 @@ class OTMClient : NSObject {
                 } else {
                     newData = data
                 }
-                OTMClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+                OTMClient.parseJSONWithCompletionHandler(newData!, completionHandler: completionHandler)
             }
         }
         
@@ -147,7 +147,7 @@ class OTMClient : NSObject {
             completionHandler(result: nil, error: parsingError)
             println(parsingError)
         } else {
-            println(parsedResult)
+            //println(parsedResult)
             completionHandler(result: parsedResult as! [String: AnyObject], error: nil)
         }
     }

@@ -21,7 +21,6 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
     @IBOutlet weak var loginView: FBSDKLoginButton!
     
 // Mark: - Variables
-    var appDelegate: AppDelegate!
     var session: NSURLSession!
     var backgroundGradient: CAGradientLayer? = nil
     var keyboardAdjusted = false
@@ -30,7 +29,6 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         session = NSURLSession.sharedSession()
         self.configureUI()
         
@@ -98,7 +96,6 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
         } else if result.isCancelled {
             self.viewWillAppear(true)
         } else {
-            println("test")
             NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString! , forKey: "FBAccessToken")
             OTMClient.sharedInstance().loginWithFacebook { success, errorString in
                 if success {
