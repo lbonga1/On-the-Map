@@ -21,6 +21,7 @@ class PostViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var studyingLabel: UILabel!
     @IBOutlet weak var linkTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,9 @@ class PostViewController: UIViewController {
         self.mapView.hidden = true
         self.submitButton.hidden = true
         self.linkTextField.hidden = true
+    
+        // Activity indicator
+        activityIndicator.hidesWhenStopped = true
     }
 
     
@@ -37,13 +41,20 @@ class PostViewController: UIViewController {
     // Locates the address provided by user and adds a pin to the map.
     @IBAction func findLocation(sender: AnyObject) {
         self.makeSecondView()
+        self.makeTransparent()
+        activityIndicator.startAnimating()
+        
         var location = locationTextField.text
         var geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
             if let placemark = placemarks?[0] as? CLPlacemark {
                 self.mapView.addAnnotation(MKPlacemark(placemark: placemark))
+                self.activityIndicator.stopAnimating()
+                self.returnTransparency()
             } else {
                 self.displayError("Could not find location", errorString: "Please try again.")
+                self.activityIndicator.stopAnimating()
+                self.returnTransparency()
             }
         })
     }
@@ -80,6 +91,18 @@ class PostViewController: UIViewController {
         self.linkTextField.hidden = false
         self.findButton.hidden = true
         self.section1.backgroundColor = UIColor(red: 0.325, green: 0.318, blue: 0.529, alpha: 1)
+    }
+    
+    // Makes map transparent while geocoding
+    func makeTransparent(){
+        self.mapView.alpha = 0.5
+        submitButton.alpha = 0.5
+    }
+    
+    // Makes map visible when geocoding is complete.
+    func returnTransparency() {
+        self.mapView.alpha = 1.0
+        submitButton.alpha = 1.0
     }
 
 }

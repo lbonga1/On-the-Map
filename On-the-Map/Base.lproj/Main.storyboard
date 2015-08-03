@@ -312,7 +312,9 @@
                     <connections>
                         <outlet property="debugLabel" destination="rdN-mb-Rm1" id="EjT-Ah-4Xb"/>
                         <outlet property="loginButton" destination="iOe-N3-ncg" id="5D1-d2-hQg"/>
+                        <outlet property="loginView" destination="1EF-UQ-hO7" id="R5W-0E-alz"/>
                         <outlet property="passwordField" destination="tnp-v6-AgU" id="Dlx-7g-bnw"/>
+                        <outlet property="signupButton" destination="nzk-uW-MDD" id="pQk-ye-SiE"/>
                         <outlet property="usernameField" destination="7TO-3x-dIv" id="Y3W-D7-9Ol"/>
                     </connections>
                 </viewController>
@@ -603,6 +605,15 @@ today?</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aI4-bS-QEc">
                                 <rect key="frame" x="0.0" y="175" width="600" height="225"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a location here:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yo9-ar-eWh">
+                                        <rect key="frame" x="50" y="53" width="500" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="vnS-y5-Wcw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="18"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textField opaque="NO" clipsSubviews="YES" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R7j-vt-yRJ">
                                         <rect key="frame" x="50" y="98" width="500" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -615,8 +626,11 @@ today?</string>
                                     <constraint firstAttribute="bottom" secondItem="R7j-vt-yRJ" secondAttribute="bottom" constant="97" id="DCz-jb-M0J"/>
                                     <constraint firstAttribute="trailing" secondItem="R7j-vt-yRJ" secondAttribute="trailing" constant="50" id="FgO-4d-xeP"/>
                                     <constraint firstItem="R7j-vt-yRJ" firstAttribute="top" secondItem="aI4-bS-QEc" secondAttribute="top" constant="98" id="GhO-ZB-SoT"/>
+                                    <constraint firstAttribute="trailing" secondItem="yo9-ar-eWh" secondAttribute="trailing" constant="50" id="Kdy-vl-SA9"/>
                                     <constraint firstItem="R7j-vt-yRJ" firstAttribute="leading" secondItem="aI4-bS-QEc" secondAttribute="leading" constant="50" id="QcR-Bc-tkr"/>
                                     <constraint firstAttribute="height" constant="225" id="bfZ-iS-Ieb"/>
+                                    <constraint firstAttribute="bottom" secondItem="yo9-ar-eWh" secondAttribute="bottom" constant="142" id="fC9-5c-GhU"/>
+                                    <constraint firstItem="yo9-ar-eWh" firstAttribute="leading" secondItem="aI4-bS-QEc" secondAttribute="leading" constant="50" id="mQN-9X-zDd"/>
                                     <constraint firstAttribute="width" constant="600" id="zl0-Db-HdE"/>
                                 </constraints>
                                 <variation key="default">
@@ -678,6 +692,13 @@ today?</string>
                                     <action selector="postLocation:" destination="6FC-Fw-mBV" eventType="touchUpInside" id="8Ot-Xe-s41"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gxx-cT-d1E">
+                                <rect key="frame" x="148" y="185" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="GUS-iZ-qrz"/>
+                                    <constraint firstAttribute="height" constant="80" id="gZq-Kn-GsZ"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -690,19 +711,26 @@ today?</string>
                             <constraint firstItem="cQD-WK-0P1" firstAttribute="top" secondItem="aI4-bS-QEc" secondAttribute="bottom" constant="-25" id="IfY-dg-tMW"/>
                             <constraint firstItem="aI4-bS-QEc" firstAttribute="top" secondItem="k09-2i-Oyz" secondAttribute="bottom" id="LP0-C6-PlU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cQD-WK-0P1" secondAttribute="trailing" constant="-16" id="Mdk-YM-gr4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gxx-cT-d1E" secondAttribute="trailing" constant="274" id="N0J-lO-LjX"/>
                             <constraint firstItem="cQD-WK-0P1" firstAttribute="top" secondItem="aI4-bS-QEc" secondAttribute="bottom" id="PQE-rC-zA3"/>
                             <constraint firstItem="aI4-bS-QEc" firstAttribute="top" secondItem="k09-2i-Oyz" secondAttribute="bottom" id="RQj-W3-MmR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aI4-bS-QEc" secondAttribute="trailing" constant="-16" id="UGp-xt-Gmf"/>
+                            <constraint firstItem="gxx-cT-d1E" firstAttribute="leading" secondItem="a6U-jo-M5F" secondAttribute="leadingMargin" constant="274" id="W3k-b2-6T7"/>
                             <constraint firstItem="GhH-Eg-6hr" firstAttribute="top" secondItem="cQD-WK-0P1" secondAttribute="bottom" id="Y4l-7q-PYm"/>
+                            <constraint firstItem="gxx-cT-d1E" firstAttribute="leading" secondItem="a6U-jo-M5F" secondAttribute="leadingMargin" constant="132" id="Yzp-1E-QNp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="k09-2i-Oyz" secondAttribute="trailing" constant="-16" id="ZWX-pf-ql9"/>
                             <constraint firstItem="k09-2i-Oyz" firstAttribute="top" secondItem="a6U-jo-M5F" secondAttribute="topMargin" id="a3r-MZ-mIm"/>
+                            <constraint firstItem="cQD-WK-0P1" firstAttribute="top" secondItem="gxx-cT-d1E" secondAttribute="bottom" constant="50" id="e6z-Lg-ie0"/>
                             <constraint firstItem="k09-2i-Oyz" firstAttribute="top" secondItem="a6U-jo-M5F" secondAttribute="topMargin" id="eab-PQ-I7D"/>
                             <constraint firstItem="cQD-WK-0P1" firstAttribute="leading" secondItem="a6U-jo-M5F" secondAttribute="leadingMargin" constant="-16" id="ebn-2v-2sj"/>
+                            <constraint firstItem="cQD-WK-0P1" firstAttribute="top" secondItem="gxx-cT-d1E" secondAttribute="bottom" constant="65" id="iJ2-Pr-vIP"/>
+                            <constraint firstItem="gxx-cT-d1E" firstAttribute="top" secondItem="k09-2i-Oyz" secondAttribute="bottom" constant="40" id="l2a-IJ-07m"/>
                             <constraint firstItem="GhH-Eg-6hr" firstAttribute="top" secondItem="BED-Ll-eDv" secondAttribute="bottom" constant="92" id="nhx-Kx-rRc"/>
                             <constraint firstItem="aI4-bS-QEc" firstAttribute="leading" secondItem="a6U-jo-M5F" secondAttribute="leadingMargin" constant="-16" id="rXZ-Hg-SsM"/>
                             <constraint firstItem="Nc8-AJ-NrK" firstAttribute="leading" secondItem="a6U-jo-M5F" secondAttribute="leadingMargin" constant="-16" id="sDi-27-xkj"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Nc8-AJ-NrK" secondAttribute="bottom" id="sPg-Xr-8uL"/>
                             <constraint firstItem="G1x-ws-bsE" firstAttribute="leading" secondItem="a6U-jo-M5F" secondAttribute="leadingMargin" constant="100" id="wBa-3a-3GW"/>
+                            <constraint firstItem="gxx-cT-d1E" firstAttribute="top" secondItem="1mp-Hf-uGH" secondAttribute="bottom" constant="165" id="y4p-4X-LqV"/>
                             <constraint firstItem="GhH-Eg-6hr" firstAttribute="top" secondItem="G1x-ws-bsE" secondAttribute="bottom" constant="92" id="yG9-YY-ezF"/>
                         </constraints>
                         <variation key="default">
@@ -712,13 +740,19 @@ today?</string>
                                 <exclude reference="eab-PQ-I7D"/>
                                 <exclude reference="LP0-C6-PlU"/>
                                 <exclude reference="RQj-W3-MmR"/>
+                                <exclude reference="N0J-lO-LjX"/>
+                                <exclude reference="W3k-b2-6T7"/>
+                                <exclude reference="l2a-IJ-07m"/>
                                 <exclude reference="2hL-dK-a2g"/>
                                 <exclude reference="PQE-rC-zA3"/>
+                                <exclude reference="e6z-Lg-ie0"/>
+                                <exclude reference="iJ2-Pr-vIP"/>
                             </mask>
                         </variation>
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="activityIndicator" destination="gxx-cT-d1E" id="iNW-Tj-fzr"/>
                         <outlet property="findButton" destination="G1x-ws-bsE" id="z0d-lm-fpc"/>
                         <outlet property="linkTextField" destination="uSa-KQ-wof" id="vKb-tk-YLx"/>
                         <outlet property="locationTextField" destination="R7j-vt-yRJ" id="IQ0-yD-isc"/>

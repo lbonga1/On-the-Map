@@ -11,11 +11,8 @@ import UIKit
 
 class OTMClient : NSObject {
     
-    /* Shared session */
+    // Shared session
     var session: NSURLSession
-    
-    // Authentication state
-    var userID : Int? = nil
     
     override init() {
         session = NSURLSession.sharedSession()
@@ -25,23 +22,42 @@ class OTMClient : NSObject {
 // MARK: - Methods
     
     // Get type network call.
-    func taskForGETMethod(parameters: [String : AnyObject], request: NSURLRequest, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETMethod(parameters: [String : AnyObject], baseURL: String, method: String, key: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        /* 1. Set the parameters */
+        // 1. Set the parameters
         var parameters = [String: AnyObject]()
         
-        /* 4. Make the request */
+        // 2/3. Build the URL and configure the request
+        let urlString = baseURL + method + key
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        
+        if baseURL == Constants.ParseBaseURLSecure {
+            let parseID = Constants.ParseAppID
+            let parseKey = Constants.ParseAPIKey
+            
+            request.addValue(parseID, forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue(parseKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        }
+        
+        // 4. Make the request
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            // 5/6. Parse the data and use the data (happens in completion handler)
             if let error = downloadError {
                 completionHandler(result: nil, error: downloadError)
             } else {
+                let newData : NSData?
+                if baseURL == Constants.UdacityBaseURLSecure {
+                    newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+                } else {
+                    newData = data
+                }
                 OTMClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
             }
         }
         
-        /* 7. Start the request */
+        // 7. Start the request
         task.resume()
         
         return task
@@ -50,37 +66,48 @@ class OTMClient : NSObject {
     // Post type network call.
     func taskForPOSTMethod(parameters: [String: AnyObject], baseURL: String, method: String, jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        /* 1. Set the parameters */
+        // 1. Set the parameters
         var parameters = [String: AnyObject]()
         
-        /* 2/3. Build the URL and configure the request */
+        // 2. Build the URL
         let urlString = baseURL + method + OTMClient.escapedParameters(parameters)
         let url = NSURL(string: urlString)!
+        
+        // 3. Configure the request
         let request = NSMutableURLRequest(URL: url)
         var jsonifyError: NSError? = nil
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
         
-        /* 4. Make the request */
+        if baseURL == Constants.ParseBaseURLSecure {
+            request.HTTPMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue(Constants.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+        } else {
+            request.HTTPMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+        }
+        
+        // 4. Make the request
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            // 5/6. Parse the data and use the data (happens in completion handler)
             if let error = downloadError {
                 completionHandler(result: nil, error: downloadError)
             } else {
                 let newData : NSData?
                 if baseURL == Constants.UdacityBaseURLSecure {
-                //if baseURL.rangeOfString(Constants.UdacityBaseURLSecure) != nil{
                     newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-                }else{
+                } else {
                     newData = data
                 }
                 OTMClient.parseJSONWithCompletionHandler(newData!, completionHandler: completionHandler)
             }
         }
         
-        /* 7. Start the request */
+        // 7. Start the request
         task.resume()
         
         return task
@@ -89,20 +116,20 @@ class OTMClient : NSObject {
         
 // MARK: - Helpers
     
-    /* Helper function: Given a dictionary of parameters, convert to a string for a url */
+    // Helper function: Given a dictionary of parameters, convert to a string for a url
     class func escapedParameters(parameters: [String : AnyObject]) -> String {
         
         var urlVars = [String]()
         
         for (key, value) in parameters {
             
-            /* Make sure that it is a string value */
+            // Make sure that it is a string value
             let stringValue = "\(value)"
             
-            /* Escape it */
+            // Escape it
             let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             
-            /* Append it */
+            // Append it
             urlVars += [key + "=" + "\(escapedValue!)"]
             
         }
@@ -110,7 +137,7 @@ class OTMClient : NSObject {
         return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
     }
     
-    /* Helper: Given raw JSON, return a usable Foundation object */
+    // Helper: Given raw JSON, return a usable Foundation object
     class func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
         var parsingError: NSError? = nil
@@ -125,7 +152,7 @@ class OTMClient : NSObject {
         }
     }
     
-    /* Helper: Substitute the key for the value that is contained within the method name */
+    // Helper: Substitute the key for the value that is contained within the method name
     class func subtituteKeyInMethod(method: String, key: String, value: String) -> String? {
         if method.rangeOfString("{\(key)}") != nil {
             return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)

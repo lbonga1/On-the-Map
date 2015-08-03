@@ -10,8 +10,8 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
-    
+class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKLoginButtonDelegate {
+
 // Mark: - Outlets
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -34,7 +34,25 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         session = NSURLSession.sharedSession()
         self.configureUI()
         
-        //self.loginView.delegate = self
+        loginView.delegate = self
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add Tap Gesture Recognizer
+        var tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.delegate = self
+        view.addGestureRecognizer(tapRecognizer)
+        
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        unsubscribeFromKeyboardNotifications()
     }
     
 // MARK: - Actions
@@ -68,7 +86,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         dispatch_async(dispatch_get_main_queue(), {
             self.usernameField.text = ""
             self.passwordField.text = ""
-            //self.debugLabel.text = ""
             self.getTabController()
         })
     }
@@ -79,7 +96,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         if ((error) != nil) {
             println("facebook error")
         } else if result.isCancelled {
-            println("cancelled")
+            self.viewWillAppear(true)
         } else {
             println("test")
             NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString! , forKey: "FBAccessToken")
@@ -98,7 +115,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         println("User Logged Out")
     }
     
-    //Gets MapViewController.
+    // Gets MapViewController.
     func getTabController() {
         let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MapTabBarController") as! UITabBarController
         self.presentViewController(controller, animated: true, completion: nil)
@@ -120,7 +137,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 extension LoginViewController {
     func configureUI() {
         
-        /* Configure background gradient */
+        // Configure background gradient
         self.view.backgroundColor = UIColor.clearColor()
         let colorTop = UIColor(red: 0.973, green: 0.514, blue: 0.055, alpha: 1.0).CGColor
         let colorBottom = UIColor(red: 0.965, green: 0.353, blue: 0.027, alpha: 1.0).CGColor
@@ -138,7 +155,7 @@ extension LoginViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    func unsubscribeToKeyboardNotifications() {
+    func unsubscribeFromKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
     }
     
@@ -163,5 +180,23 @@ extension LoginViewController {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.CGRectValue().height
+    }
+    
+    // Tap Gesture Recognizer Delegate
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        
+        return usernameField!.isFirstResponder() || passwordField!.isFirstResponder()
+    }
+    
+    // Dismiss keyboard on tap
+    func handleSingleTap(recognizer: UIGestureRecognizer) {
+        
+        view.endEditing(true)
+        
+        // Set the origin back to original origin
+        if view.frame.origin.y != lastKeyboardOffset {
+            
+            view.frame.origin.y = lastKeyboardOffset
+        }
     }
 }

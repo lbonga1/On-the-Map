@@ -17,6 +17,7 @@ extension OTMClient {
     
     struct Methods {
         static let UdacitySession: String = "/session"
+        static let FacebookSession: String = "/session"
         static let UdacityData: String = "/users/"
     }
     

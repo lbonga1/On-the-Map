@@ -41,8 +41,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         // Gets student locations.
         self.getStudentLocations()
-        println(locations.count)
-    }
+        }
     
 // MARK: - MKMapViewDelegate
     
