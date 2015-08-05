@@ -10,7 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
 
 // Mark: - Outlets
     @IBOutlet weak var usernameField: UITextField!
@@ -31,8 +31,6 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
         
         session = NSURLSession.sharedSession()
         self.configureUI()
-        
-        loginView.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -76,6 +74,28 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
             })
         }
     }
+    
+    @IBAction func facebookLogin(sender: AnyObject) {
+        let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.logInWithReadPermissions(["email"], handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+            self.debugLabel.text = ""
+            if error != nil {
+                self.viewWillAppear(true)
+            } else if result.isCancelled {
+                self.viewWillAppear(true)
+            } else {
+                NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString!, forKey: "FBAccessToken")
+                OTMClient.sharedInstance().loginWithFacebook { success, errorString in
+                    if success {
+                        self.getTabController()
+                    } else {
+                        self.displayError(errorString!)
+                    }
+                }
+            }
+        })
+    }
+    
 
 // MARK: - Additional methods
     
@@ -86,30 +106,6 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
             self.passwordField.text = ""
             self.getTabController()
         })
-    }
-    
-    // Required Facebook method.
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        println("User Logged In")
-        if ((error) != nil) {
-            println("facebook error")
-        } else if result.isCancelled {
-            self.viewWillAppear(true)
-        } else {
-            NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString! , forKey: "FBAccessToken")
-            OTMClient.sharedInstance().loginWithFacebook { success, errorString in
-                if success {
-                    self.getTabController()
-                } else {
-                    self.displayError(errorString!)
-                }
-            }
-        }
-    }
-    
-    // Required Facebook method.
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        println("User Logged Out")
     }
     
     // Gets MapViewController.
@@ -128,7 +124,6 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate, FBSDKL
         }
     }
 }
-
 
 // Mark: - Configure UI
 extension LoginViewController {

@@ -59,6 +59,7 @@ extension OTMClient {
         let baseURL = Constants.UdacityBaseURLSecure
         let method = Methods.UdacitySession
         let jsonBody = ["facebook_mobile": ["access_token": NSUserDefaults.standardUserDefaults().stringForKey("FBAccessToken")!]]
+        println(NSUserDefaults.standardUserDefaults().stringForKey("FBAccessToken"))
         
         // Make the request
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
@@ -68,7 +69,8 @@ extension OTMClient {
                 println("error1")
             } else {
                 if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
-                    if let results = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.UserID) as? String {
+                    if let userID = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.UserID) as? String {
+                        NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "UdacityUserID")
                         completionHandler(success: true, errorString: "successful")
                         println("completed parse")
                     }

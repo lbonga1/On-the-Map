@@ -136,17 +136,32 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EF-UQ-hO7" customClass="FBSDKLoginButton">
-                                        <rect key="frame" x="38" y="530" width="300" height="40"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRC-ix-bQx">
+                                        <rect key="frame" x="63" y="514" width="250" height="40"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="43T-wd-32K"/>
-                                            <constraint firstAttribute="width" constant="300" id="l4G-a1-MRZ"/>
+                                            <constraint firstAttribute="width" constant="250" id="4pt-8J-61A"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="7Mk-34-0FY"/>
+                                            <constraint firstAttribute="height" constant="40" id="I1H-Ex-bRB"/>
+                                            <constraint firstAttribute="width" constant="514" id="SAg-qh-ffF"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="sXz-vu-2tv"/>
                                         </constraints>
+                                        <state key="normal" backgroundImage="Facebook">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="7Mk-34-0FY"/>
+                                                <exclude reference="SAg-qh-ffF"/>
+                                                <exclude reference="sXz-vu-2tv"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
-                                            <action selector="facebookLogin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TgD-PF-ZzV"/>
+                                            <action selector="facebookLogin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="32d-4J-rnh"/>
+                                            <action selector="userLogin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="5Il-SE-Yk4"/>
                                         </connections>
-                                    </view>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254901959999995" green="0.51372549020000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -162,13 +177,16 @@
                                     <constraint firstAttribute="trailing" secondItem="tnp-v6-AgU" secondAttribute="trailing" constant="177" id="6vz-OZ-ebi"/>
                                     <constraint firstAttribute="trailing" secondItem="Lbx-ip-h9j" secondAttribute="trailing" constant="213" id="82m-8L-tIg"/>
                                     <constraint firstAttribute="trailing" secondItem="X8l-lm-3H6" secondAttribute="trailing" constant="43" id="8AR-hK-kC4"/>
+                                    <constraint firstItem="LRC-ix-bQx" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="98" id="9aY-uj-iPc"/>
                                     <constraint firstAttribute="trailing" secondItem="iOe-N3-ncg" secondAttribute="trailing" constant="43" id="9w0-97-4sA"/>
                                     <constraint firstAttribute="trailing" secondItem="7TO-3x-dIv" secondAttribute="trailing" constant="177" id="BRd-ro-YAf"/>
                                     <constraint firstAttribute="trailing" secondItem="Lbx-ip-h9j" secondAttribute="trailing" constant="213" id="Bxe-4L-5RC"/>
+                                    <constraint firstItem="LRC-ix-bQx" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="63" id="Flb-xQ-fJa"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aHm-en-mrE" secondAttribute="leading" constant="177" id="Iap-Ow-YKB"/>
                                     <constraint firstItem="7TO-3x-dIv" firstAttribute="top" secondItem="X8l-lm-3H6" secondAttribute="bottom" constant="8" id="K2p-2v-aqq"/>
                                     <constraint firstItem="rdN-mb-Rm1" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="65" id="K4Z-1u-N7x"/>
                                     <constraint firstAttribute="trailing" secondItem="Lbx-ip-h9j" secondAttribute="trailing" constant="213" id="KoB-hX-ubA"/>
+                                    <constraint firstAttribute="bottom" secondItem="LRC-ix-bQx" secondAttribute="bottom" constant="46" id="KrG-WA-aBf"/>
                                     <constraint firstItem="Lbx-ip-h9j" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="214" id="Ksu-6t-z3G"/>
                                     <constraint firstItem="tnp-v6-AgU" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="L8i-m5-g56"/>
                                     <constraint firstItem="X8l-lm-3H6" firstAttribute="top" secondItem="Lbx-ip-h9j" secondAttribute="bottom" constant="26" id="M3s-72-gR5"/>
@@ -187,7 +205,6 @@
                                     <constraint firstItem="X8l-lm-3H6" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="43" id="YEs-g1-gcf"/>
                                     <constraint firstAttribute="trailing" secondItem="nzk-uW-MDD" secondAttribute="trailing" constant="177" id="ZJ8-99-B3X"/>
                                     <constraint firstAttribute="bottom" secondItem="iOe-N3-ncg" secondAttribute="bottom" constant="150" id="Zej-qR-vm8"/>
-                                    <constraint firstItem="1EF-UQ-hO7" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="a1v-nB-gxL"/>
                                     <constraint firstAttribute="trailing" secondItem="tnp-v6-AgU" secondAttribute="trailing" constant="177" id="aEN-T8-3tH"/>
                                     <constraint firstItem="nzk-uW-MDD" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="aSn-WO-l4K"/>
                                     <constraint firstItem="tnp-v6-AgU" firstAttribute="top" secondItem="7TO-3x-dIv" secondAttribute="bottom" constant="8" id="bsg-Mo-LI3"/>
@@ -199,6 +216,7 @@
                                     <constraint firstItem="Lbx-ip-h9j" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="198" id="eUA-yZ-bnp"/>
                                     <constraint firstAttribute="trailing" secondItem="7TO-3x-dIv" secondAttribute="trailing" constant="43" id="evb-LM-pUX"/>
                                     <constraint firstAttribute="trailing" secondItem="tnp-v6-AgU" secondAttribute="trailing" constant="177" id="eyd-NV-EoX"/>
+                                    <constraint firstItem="LRC-ix-bQx" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="fA4-BM-T5G"/>
                                     <constraint firstAttribute="trailing" secondItem="Lbx-ip-h9j" secondAttribute="trailing" constant="198" id="gnX-f7-vuO"/>
                                     <constraint firstItem="7TO-3x-dIv" firstAttribute="leading" secondItem="aHm-en-mrE" secondAttribute="leading" constant="38" id="inn-Ob-c8e"/>
                                     <constraint firstItem="tnp-v6-AgU" firstAttribute="top" secondItem="7TO-3x-dIv" secondAttribute="bottom" constant="10" id="kIW-Rg-Zcn"/>
@@ -214,7 +232,6 @@
                                     <constraint firstItem="rdN-mb-Rm1" firstAttribute="top" secondItem="nzk-uW-MDD" secondAttribute="bottom" constant="60" id="r9i-WY-uzJ"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="top" secondItem="tnp-v6-AgU" secondAttribute="bottom" constant="8" id="rk0-p3-kdU"/>
                                     <constraint firstItem="7TO-3x-dIv" firstAttribute="top" secondItem="X8l-lm-3H6" secondAttribute="bottom" constant="10" id="s6B-En-vs1"/>
-                                    <constraint firstAttribute="bottom" secondItem="1EF-UQ-hO7" secondAttribute="bottom" constant="30" id="sj1-1R-ugg"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="top" secondItem="tnp-v6-AgU" secondAttribute="bottom" constant="8" id="uB8-Aq-9V2"/>
                                     <constraint firstItem="iOe-N3-ncg" firstAttribute="top" secondItem="tnp-v6-AgU" secondAttribute="bottom" constant="10" id="ue2-dz-bA8"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X8l-lm-3H6" secondAttribute="trailing" constant="177" id="vIl-Km-tpM"/>
@@ -287,6 +304,8 @@
                                         <exclude reference="cyU-88-rct"/>
                                         <exclude reference="pk6-G5-XAy"/>
                                         <exclude reference="qhv-Tz-VGS"/>
+                                        <exclude reference="9aY-uj-iPc"/>
+                                        <exclude reference="fA4-BM-T5G"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -312,7 +331,6 @@
                     <connections>
                         <outlet property="debugLabel" destination="rdN-mb-Rm1" id="EjT-Ah-4Xb"/>
                         <outlet property="loginButton" destination="iOe-N3-ncg" id="5D1-d2-hQg"/>
-                        <outlet property="loginView" destination="1EF-UQ-hO7" id="R5W-0E-alz"/>
                         <outlet property="passwordField" destination="tnp-v6-AgU" id="Dlx-7g-bnw"/>
                         <outlet property="signupButton" destination="nzk-uW-MDD" id="pQk-ye-SiE"/>
                         <outlet property="usernameField" destination="7TO-3x-dIv" id="Y3W-D7-9Ol"/>
@@ -850,6 +868,7 @@ today?</string>
         </scene>
     </scenes>
     <resources>
+        <image name="Facebook" width="320" height="54"/>
         <image name="ListView" width="32" height="32"/>
         <image name="MapView" width="32" height="32"/>
         <image name="Pin" width="32" height="32"/>

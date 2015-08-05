@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
@@ -27,11 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         // Set up bar button items.
-        if FBSDKAccessToken.currentAccessToken() != nil {
-            navigationItem.leftBarButtonItem = closeButton
-        } else {
-            navigationItem.leftBarButtonItem = logoutButton
-        }
+        navigationItem.leftBarButtonItem = logoutButton
         
         self.navigationItem.setRightBarButtonItems([refreshButton, postButton], animated: true)
     }
@@ -105,11 +102,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
      // Logs user out of Udacity.
     @IBAction func userLogout(sender: AnyObject) {
-        OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
-            if success {
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            FBSDKAccessToken.setCurrentAccessToken(nil)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
+                if success {
                 self.dismissViewControllerAnimated(true, completion: nil)
-            } else {
-                self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
+                } else {
+                    self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
+                }
             }
         }
     }
