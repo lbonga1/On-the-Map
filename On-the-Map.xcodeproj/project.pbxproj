@@ -10,6 +10,7 @@
 		1A4F63AC1B68261500CFE084 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4F63AB1B68261500CFE084 /* Bolts.framework */; };
 		1A4F63AE1B68261900CFE084 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4F63AD1B68261900CFE084 /* FBSDKCoreKit.framework */; };
 		1A4F63B01B68261C00CFE084 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4F63AF1B68261C00CFE084 /* FBSDKLoginKit.framework */; };
+		1A58C7661B7185220056FBFC /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58C7651B7185220056FBFC /* WebViewController.swift */; };
 		1A5B98BF1B6F35710050B635 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B98BE1B6F35710050B635 /* Data.swift */; };
 		1A6B04281B619751001FFE77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04271B619751001FFE77 /* AppDelegate.swift */; };
 		1A6B042A1B619751001FFE77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04291B619751001FFE77 /* LoginViewController.swift */; };
@@ -41,6 +42,7 @@
 		1A4F63AB1B68261500CFE084 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		1A4F63AD1B68261900CFE084 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		1A4F63AF1B68261C00CFE084 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		1A58C7651B7185220056FBFC /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A5B98BE1B6F35710050B635 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		1A6B04221B619751001FFE77 /* On-the-Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On-the-Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6B04261B619751001FFE77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				1AC596681B6408E200C1ADAD /* PostViewController.swift */,
 				1A6B04471B619817001FFE77 /* MapViewController.swift */,
 				1A6B04491B619879001FFE77 /* ListViewController.swift */,
+				1A58C7651B7185220056FBFC /* WebViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				1A5B98BF1B6F35710050B635 /* Data.swift in Sources */,
 				1AC596691B6408E200C1ADAD /* PostViewController.swift in Sources */,
 				1A6B044C1B6198C1001FFE77 /* OTMClient.swift in Sources */,
+				1A58C7661B7185220056FBFC /* WebViewController.swift in Sources */,
 				1A6B04501B619917001FFE77 /* StudentLocations.swift in Sources */,
 				1A6B04281B619751001FFE77 /* AppDelegate.swift in Sources */,
 				1A6B04551B61A605001FFE77 /* ParseConvenience.swift in Sources */,

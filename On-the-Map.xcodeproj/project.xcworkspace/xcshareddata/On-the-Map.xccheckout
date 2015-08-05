@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F9ABE0AE-6B55-4BBC-83C8-8800813ACAA5</string>
 	<key>IDESourceControlProjectName</key>
-	<string>On-the-Map</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>1E5A728A4F4606FB12D5A3A873CE28511E690832</key>
@@ -16,11 +16,11 @@
 		<string>https://github.com/lbonga1/On-the-Map.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>On-the-Map.xcodeproj</string>
+	<string>On-the-Map.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1E5A728A4F4606FB12D5A3A873CE28511E690832</key>
-		<string>../..On-the-Map</string>
+		<string>../..On-the-Map/</string>
 		<key>F3197258A189E1E799D03CA49177B95CAA5D832B</key>
 		<string>../..</string>
 	</dict>
@@ -46,7 +46,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>1E5A728A4F4606FB12D5A3A873CE28511E690832</string>
 			<key>IDESourceControlWCCName</key>
-			<string>On-the-MapOn-the-Map</string>
+			<string>On-the-Map</string>
 		</dict>
 	</array>
 </dict>

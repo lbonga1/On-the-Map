@@ -18,7 +18,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet var postButton: UIBarButtonItem!
     @IBOutlet var closeButton: UIBarButtonItem!
-    
+
 // MARK: - Variables
     var locations = Data.sharedInstance().locations
     var annotations = [MKPointAnnotation]()
@@ -74,61 +74,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-// MARK: - Additional methods
-    
-    // Gets student location pins.
-    func getStudentLocations() {
-        OTMClient.sharedInstance().getStudentLocations { locations, errorString -> Void in
-            if let locations = locations {
-                self.locations = locations
-                self.displayMap()
-            } else {
-                self.displayError("Error fetching locations", errorString: errorString!)
-            }
-        }
-    }
-    
-    // Displays error message alert view.
-    func displayError(title: String, errorString: String) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
-            let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    // Add annotations to the map.
-    func displayMap() {
-        dispatch_async(dispatch_get_main_queue()) {
-        
-            for dictionary in self.locations {
-            
-                let lat = CLLocationDegrees(dictionary.latitude as Double)
-                let long = CLLocationDegrees(dictionary.longitude as Double)
-            
-                // Create a CLLocationCoordinates2D instance.
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            
-                let first = dictionary.firstName as String
-                let last = dictionary.lastName as String
-                let mediaURL = dictionary.mediaURL as String
-            
-                // Create the annotation and set its properties.
-                var annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(first) \(last)"
-                annotation.subtitle = mediaURL
-            
-                // Place the annotation in an array of annotations.
-                self.annotations.append(annotation)
-            }
-        
-            // Add the annotations to the map.
-            self.mapView.addAnnotations(self.annotations)
-        }
-    }
-    
 // MARK: - Actions:
     
     // Gets post view controller
@@ -166,6 +111,61 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             } else {
                 self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
             }
+        }
+    }
+    
+    // MARK: - Additional methods
+    
+    // Gets student location pins.
+    func getStudentLocations() {
+        OTMClient.sharedInstance().getStudentLocations { locations, errorString -> Void in
+            if let locations = locations {
+                self.locations = locations
+                self.displayMap()
+            } else {
+                self.displayError("Error fetching locations", errorString: errorString!)
+            }
+        }
+    }
+    
+    // Displays error message alert view.
+    func displayError(title: String, errorString: String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
+            let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    // Add annotations to the map.
+    func displayMap() {
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            for dictionary in self.locations {
+                
+                let lat = CLLocationDegrees(dictionary.latitude as Double)
+                let long = CLLocationDegrees(dictionary.longitude as Double)
+                
+                // Create a CLLocationCoordinates2D instance.
+                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                
+                let first = dictionary.firstName as String
+                let last = dictionary.lastName as String
+                let mediaURL = dictionary.mediaURL as String
+                
+                // Create the annotation and set its properties.
+                var annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = "\(first) \(last)"
+                annotation.subtitle = mediaURL
+                
+                // Place the annotation in an array of annotations.
+                self.annotations.append(annotation)
+            }
+            
+            // Add the annotations to the map.
+            self.mapView.addAnnotations(self.annotations)
         }
     }
 }

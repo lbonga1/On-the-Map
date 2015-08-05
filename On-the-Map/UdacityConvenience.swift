@@ -93,18 +93,17 @@ extension OTMClient {
         self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in
             // Send the desired value(s) to completion handler
             if let error = error {
-                println("user data error 1")
                 completionHandler(success: false, error: "Please check your network connection and try again.")
             } else {
                 if let userDictionary = result.valueForKey(OTMClient.JsonResponseKeys.User) as? NSDictionary {
                     if let firstName = userDictionary.valueForKey(OTMClient.JsonResponseKeys.UserFirstName) as? String {
+                        Data.sharedInstance().userFirstName = firstName
                         if let lastName = userDictionary.valueForKey(OTMClient.JsonResponseKeys.UserLastName) as? String {
+                            Data.sharedInstance().userLastName = lastName
                             completionHandler(success: true, error: "successful")
-                            println("Success, user data")
                         }
                     }
                 } else {
-                    println("user data error 2")
                     completionHandler(success: false, error: "Server error. Please try again.")
                 }
             }

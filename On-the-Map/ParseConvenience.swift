@@ -35,21 +35,21 @@ extension OTMClient {
         }
     }
     
-    // Post location
-    func postLocation(uniqueKey: String, firstName: String, lastName: String, mapString: String, mediaURL: String, latitude: Double, longitude: Double, completionHandler: (success: Bool, errorString: String?) -> Void) {
+    // Post location to Parse.
+    func postLocation(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         // Set the variables
         var parameters = [String: AnyObject]()
         let baseURL = Constants.ParseBaseURLSecure
         let method = ""
         let jsonBody: [String: AnyObject] = [
-            "unique key": JsonResponseKeys.UserID,
-            "firstName": JsonResponseKeys.FirstName,
-            "lastName": JsonResponseKeys.LastName,
-            "mapString": JsonResponseKeys.MapString,
-            "mediaURL": JsonResponseKeys.MediaURL,
-            "latitude": JsonResponseKeys.Latitude,
-            "longitude": JsonResponseKeys.Longitude
+            "unique key": NSUserDefaults.standardUserDefaults().stringForKey("UdacityUserID")!,
+            "firstName": Data.sharedInstance().userFirstName,
+            "lastName": Data.sharedInstance().userLastName,
+            "mapString": Data.sharedInstance().mapString,
+            "mediaURL": Data.sharedInstance().mediaURL,
+            "latitude": Data.sharedInstance().region.center.latitude,
+            "longitude": Data.sharedInstance().region.center.longitude
         ]
         
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
@@ -57,10 +57,9 @@ extension OTMClient {
             if let error = error {
                 completionHandler(success: false, errorString: "Please check your network connection and try again.")
             } else {
-                if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
-                    if let results = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.ObjectID) as? String {
-                        completionHandler(success: true, errorString: "successful")
-                    }
+                if let results = result.valueForKey(OTMClient.JsonResponseKeys.ObjectID) as? String {
+                    Data.sharedInstance().objectID = results
+                    completionHandler(success: true, errorString: "successful")
                 } else {
                     completionHandler(success: false, errorString: "Please try again.")
                 }

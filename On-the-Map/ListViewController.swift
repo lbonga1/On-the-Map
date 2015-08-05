@@ -41,7 +41,47 @@ class ListViewController: UITableViewController {
         listView.reloadData()
     }
     
-// MARK: - Methods
+    
+// MARK: - Actions
+    
+    // Gets post view controller.
+    @IBAction func postUserLocation(sender: AnyObject) {
+        OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
+            if success {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let storyboard = self.storyboard
+                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+                    
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
+            } else {
+                self.displayError("Could not handle request.", errorString: error)
+            }
+        }
+    }
+    
+    // Refreshes student location data.
+    @IBAction func refreshLocations(sender: AnyObject) {
+        self.getStudentLocations()
+    }
+    
+    // Logout of Udacity.
+    @IBAction func udacityLogout(sender: AnyObject) {
+        OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
+            if success {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
+            }
+        }
+    }
+    
+    // Returns to Login View.
+    @IBAction func returnToLoginVC(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+// MARK: - TableView Methods
     
     // Set up tableView cells.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -67,7 +107,7 @@ class ListViewController: UITableViewController {
         if studentLocations == nil {
             self.getStudentLocations()
         }
-        return studentLocations.count
+        return Data.sharedInstance().locations.count
     }
     
     // Opens URL in browser when row is tapped.
@@ -78,6 +118,8 @@ class ListViewController: UITableViewController {
         UIApplication.sharedApplication().openURL(NSURL(string: mediaURL)!)
         
     }
+    
+// MARK: - Additional Methods
     
     // Retrieves student location data.
     func getStudentLocations() {
@@ -102,44 +144,4 @@ class ListViewController: UITableViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
-    
-// MARK: - Actions
-    
-    // Gets post view controller.
-    @IBAction func postUserLocation(sender: AnyObject) {
-        OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
-            if success {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let storyboard = self.storyboard
-                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
-                    
-                    self.presentViewController(controller, animated: true, completion: nil)
-                }
-            } else {
-                self.displayError("Could not handle request.", errorString: error)
-            }
-        }
-    }
-    
-    // Refreshes student location data.
-    @IBAction func refreshLocations(sender: AnyObject) {
-      self.getStudentLocations()
-    }
-    
-    // Logout of Udacity.
-    @IBAction func udacityLogout(sender: AnyObject) {
-        OTMClient.sharedInstance().udacityLogout { (success: Bool, error: String?) -> Void in
-            if success {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            } else {
-                self.displayError("Could not log out", errorString: "Please check your network connection and try again.")
-            }
-        }
-    }
-    
-    // Returns to Login View.
-    @IBAction func returnToLoginVC(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
 }
