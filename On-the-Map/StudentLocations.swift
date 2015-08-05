@@ -32,7 +32,7 @@ struct StudentLocations {
         longitude = dictionary[OTMClient.JsonResponseKeys.Longitude] as! Double
         mapString = dictionary[OTMClient.JsonResponseKeys.MapString] as! String
         mediaURL = dictionary[OTMClient.JsonResponseKeys.MediaURL] as! String
-        objectID = dictionary[OTMClient.JsonResponseKeys.ObjectID] as! String
+        objectID = dictionary[OTMClient.JsonResponseKeys.ObjectId] as! String
         uniqueKey = dictionary[OTMClient.JsonResponseKeys.UniqueKey] as! String
         updatedAt = dictionary[OTMClient.JsonResponseKeys.UpdatedAt] as! String
         

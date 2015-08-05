@@ -57,7 +57,7 @@ extension OTMClient {
             if let error = error {
                 completionHandler(success: false, errorString: "Please check your network connection and try again.")
             } else {
-                if let results = result.valueForKey(OTMClient.JsonResponseKeys.ObjectID) as? String {
+                if let results = result.valueForKey(OTMClient.JsonResponseKeys.ObjectId) as? String {
                     Data.sharedInstance().objectID = results
                     completionHandler(success: true, errorString: "successful")
                 } else {

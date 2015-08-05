@@ -11,22 +11,9 @@ import UIKit
 
 extension OTMClient {
     
-    // Login to Udacity.
+    // Login to Udacity and get User Id.
     func udacityLogin(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
-        
-        self.getUserID(username, password: password) { userID, errorString in
-            if let userID = userID {
-                NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "UdacityUserID")
-                completionHandler(success: true, errorString: nil)
-            } else {
-                completionHandler(success: false, errorString: "Could not complete request.")
-            }
-        }
-    }
     
-    // Get user ID.
-    func getUserID(username: String, password: String, completionHandler: (userID: String?, errorString: String?) -> Void) {
-        
         // Set the variables
         var parameters = [String: AnyObject]()
         let baseURL = Constants.UdacityBaseURLSecure
@@ -37,14 +24,15 @@ extension OTMClient {
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
             // Send the desired value(s) to completion handler
             if let error = error {
-                completionHandler(userID: nil, errorString: "Please check your network connection and try again.")
+                completionHandler(success: false, errorString: "Please check your network connection and try again.")
             } else {
                 if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
                     if let userID = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.UserID) as? String {
-                        completionHandler(userID: userID, errorString: "successful")
+                        NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "UdacityUserID")
+                        completionHandler(success: true, errorString: "successful")
                     }
                 } else {
-                    completionHandler(userID: nil, errorString: "Username or password is incorrect.")
+                    completionHandler(success: false, errorString: "Username or password is incorrect.")
                     println("Could not find \(JsonResponseKeys.Account) in \(result)")
                 }
             }
@@ -59,7 +47,6 @@ extension OTMClient {
         let baseURL = Constants.UdacityBaseURLSecure
         let method = Methods.UdacitySession
         let jsonBody = ["facebook_mobile": ["access_token": NSUserDefaults.standardUserDefaults().stringForKey("FBAccessToken")!]]
-        println(NSUserDefaults.standardUserDefaults().stringForKey("FBAccessToken"))
         
         // Make the request
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in

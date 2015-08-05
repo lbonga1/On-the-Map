@@ -9,13 +9,17 @@
 extension OTMClient {
     
     struct Constants {
+        // Base URLs
         static let UdacityBaseURLSecure: String = "https://www.udacity.com/api"
         static let ParseBaseURLSecure: String = "https://api.parse.com/1/classes/StudentLocation"
+        
+        // URL Keys
         static let ParseAppID: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let ParseAPIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     }
     
     struct Methods {
+        // URL Endings
         static let UdacitySession: String = "/session"
         static let FacebookSession: String = "/session"
         static let UdacityData: String = "/users/"
@@ -44,7 +48,7 @@ extension OTMClient {
         static let Longitude = "longitude"
         static let MapString = "mapString"
         static let MediaURL = "mediaURL"
-        static let ObjectID = "objectId"
+        static let ObjectId = "objectId"
         static let UniqueKey = "uniqueKey"
         static let UpdatedAt = "updatedAt"
     }
