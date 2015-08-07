@@ -21,6 +21,7 @@ class PostViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var verifyButton: UIButton!
     @IBOutlet weak var studyingLabel: UILabel!
+    @IBOutlet weak var linkLabel: UILabel!
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -32,6 +33,7 @@ class PostViewController: UIViewController {
         self.submitButton.hidden = true
         self.verifyButton.hidden = true
         self.linkTextField.hidden = true
+        self.linkLabel.hidden = true
     
         // Activity indicator
         activityIndicator.hidesWhenStopped = true
@@ -146,7 +148,8 @@ class PostViewController: UIViewController {
         self.verifyButton.hidden = false
         self.section2.hidden = true
         self.section3.hidden = true
-        self.studyingLabel.text = "Enter a link to share:"
+        self.studyingLabel.hidden = true
+        self.linkLabel.hidden = false
         self.linkTextField.hidden = false
         self.findButton.hidden = true
         self.section1.backgroundColor = UIColor(red: 0.325, green: 0.318, blue: 0.529, alpha: 1)

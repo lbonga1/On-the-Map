@@ -19,18 +19,21 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var loginView: FBSDKLoginButton!
+    @IBOutlet weak var loadingView: LoadingView!
     
 // Mark: - Variables
     var session: NSURLSession!
     var backgroundGradient: CAGradientLayer? = nil
     var keyboardAdjusted = false
-    var lastKeyboardOffset : CGFloat = 0.0
+    var lastKeyboardOffset: CGFloat = 0.0
+    var blurView: UIVisualEffectView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         session = NSURLSession.sharedSession()
         self.configureUI()
+        loadingView.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -65,10 +68,17 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
         } else if passwordField.text.isEmpty {
             debugLabel.text = "Please enter your password."
         } else {
+            self.blurLoading()
+            loadingView.hidden = false
+            loadingView.animateProgressView()
             OTMClient.sharedInstance().udacityLogin(usernameField.text, password: passwordField.text, completionHandler: { (success, errorString) -> Void in
                 if success {
+                    self.loadingView.hidden = true
+                    self.removeBlur()
                     self.completeLogin()
                 } else {
+                    self.loadingView.hidden = true
+                    self.removeBlur()
                     self.displayError(errorString!)
                 }
             })
@@ -122,6 +132,22 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
             alertController.addAction(okAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func blurLoading() {
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            self.view.backgroundColor = UIColor.clearColor()
+            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+            let blurView = UIVisualEffectView(effect: blurEffect)
+            blurView.frame = self.view.bounds
+            self.view.insertSubview(blurView, belowSubview: loadingView)
+        } else {
+            self.view.backgroundColor = UIColor.blackColor()
+        }
+    }
+    
+    func removeBlur() {
+        blurView?.removeFromSuperview()
     }
 }
 
