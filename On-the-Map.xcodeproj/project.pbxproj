@@ -26,6 +26,7 @@
 		1A6B04531B619FC2001FFE77 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04521B619FC2001FFE77 /* UdacityConvenience.swift */; };
 		1A6B04551B61A605001FFE77 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6B04541B61A605001FFE77 /* ParseConvenience.swift */; };
 		1AB3A2901B740EE600CEEA71 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB3A28F1B740EE600CEEA71 /* LoadingView.swift */; };
+		1AB3A2921B757E6800CEEA71 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB3A2911B757E6800CEEA71 /* TextFieldDelegate.swift */; };
 		1AC596691B6408E200C1ADAD /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC596681B6408E200C1ADAD /* PostViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		1A6B04521B619FC2001FFE77 /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
 		1A6B04541B61A605001FFE77 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		1AB3A28F1B740EE600CEEA71 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		1AB3A2911B757E6800CEEA71 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		1AC596681B6408E200C1ADAD /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 				1A6B044F1B619917001FFE77 /* StudentLocations.swift */,
 				1A5B98BE1B6F35710050B635 /* Data.swift */,
 				1AB3A28F1B740EE600CEEA71 /* LoadingView.swift */,
+				1AB3A2911B757E6800CEEA71 /* TextFieldDelegate.swift */,
 				1A6B042B1B619751001FFE77 /* Main.storyboard */,
 				1A6B042E1B619751001FFE77 /* Images.xcassets */,
 				1A6B04301B619751001FFE77 /* LaunchScreen.xib */,
@@ -283,6 +286,7 @@
 				1A58C7661B7185220056FBFC /* WebViewController.swift in Sources */,
 				1A6B04501B619917001FFE77 /* StudentLocations.swift in Sources */,
 				1A6B04281B619751001FFE77 /* AppDelegate.swift in Sources */,
+				1AB3A2921B757E6800CEEA71 /* TextFieldDelegate.swift in Sources */,
 				1A6B04551B61A605001FFE77 /* ParseConvenience.swift in Sources */,
 				1AB3A2901B740EE600CEEA71 /* LoadingView.swift in Sources */,
 				1A6B044A1B619879001FFE77 /* ListViewController.swift in Sources */,

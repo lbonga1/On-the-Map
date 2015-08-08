@@ -10,7 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
 // Mark: - Outlets
     @IBOutlet weak var usernameField: UITextField!
@@ -28,22 +28,23 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
     var lastKeyboardOffset: CGFloat = 0.0
     var blurView: UIVisualEffectView?
     
+    // Text field delegate objects
+    let textDelegate = TextFieldDelegate()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         session = NSURLSession.sharedSession()
         self.configureUI()
         loadingView.hidden = true
+        
+        // Text field delegates
+        self.usernameField.delegate = textDelegate
+        self.passwordField.delegate = textDelegate
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Add Tap Gesture Recognizer
-        var tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
-        tapRecognizer.numberOfTapsRequired = 1
-        tapRecognizer.delegate = self
-        view.addGestureRecognizer(tapRecognizer)
         
         subscribeToKeyboardNotifications()
     }
@@ -61,30 +62,37 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.google.com/url?q=https%3A%2F%2Fwww.udacity.com%2Faccount%2Fauth%23!%2Fsignin&sa=D&sntz=1&usg=AFQjCNERmggdSkRb9MFkqAW_5FgChiCxAQ")!)
     }
     
-    // Login button action
+    // Login with Udacity.
     @IBAction func userLogin(sender: AnyObject) {
         if usernameField.text.isEmpty {
             debugLabel.text = "Please enter your email."
         } else if passwordField.text.isEmpty {
             debugLabel.text = "Please enter your password."
         } else {
+            usernameField.resignFirstResponder()
+            passwordField.resignFirstResponder()
             self.blurLoading()
             loadingView.hidden = false
             loadingView.animateProgressView()
             OTMClient.sharedInstance().udacityLogin(usernameField.text, password: passwordField.text, completionHandler: { (success, errorString) -> Void in
                 if success {
-                    self.loadingView.hidden = true
-                    self.removeBlur()
-                    self.completeLogin()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.loadingView.hidden = true
+                        self.blurView?.removeFromSuperview()
+                        self.completeLogin()
+                    })
                 } else {
+                    dispatch_async(dispatch_get_main_queue(), {
                     self.loadingView.hidden = true
-                    self.removeBlur()
+                    self.blurView?.removeFromSuperview()
                     self.displayError(errorString!)
+                    })
                 }
             })
         }
     }
     
+    // Login using Facebook.
     @IBAction func facebookLogin(sender: AnyObject) {
         let fbLoginManager = FBSDKLoginManager()
         fbLoginManager.logInWithReadPermissions(["email"], handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
@@ -94,12 +102,21 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
             } else if result.isCancelled {
                 self.viewWillAppear(true)
             } else {
+                self.blurLoading()
                 NSUserDefaults.standardUserDefaults().setObject(FBSDKAccessToken.currentAccessToken().tokenString!, forKey: "FBAccessToken")
                 OTMClient.sharedInstance().loginWithFacebook { success, errorString in
                     if success {
-                        self.getTabController()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.loadingView.hidden = true
+                            self.blurView?.removeFromSuperview()
+                            self.completeLogin()
+                        })
                     } else {
-                        self.displayError(errorString!)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.loadingView.hidden = true
+                            self.blurView?.removeFromSuperview()
+                            self.displayError(errorString!)
+                        })
                     }
                 }
             }
@@ -109,13 +126,12 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
 
 // MARK: - Additional methods
     
+    
     // Clears text fields and gets MapViewController.
     func completeLogin() {
-        dispatch_async(dispatch_get_main_queue(), {
             self.usernameField.text = ""
             self.passwordField.text = ""
             self.getTabController()
-        })
     }
     
     // Gets MapViewController.
@@ -134,20 +150,17 @@ class LoginViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    // Blur background while login is loading
     func blurLoading() {
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             self.view.backgroundColor = UIColor.clearColor()
             let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-            let blurView = UIVisualEffectView(effect: blurEffect)
-            blurView.frame = self.view.bounds
-            self.view.insertSubview(blurView, belowSubview: loadingView)
+            blurView = UIVisualEffectView(effect: blurEffect)
+            blurView!.frame = self.view.bounds
+            self.view.insertSubview(blurView!, belowSubview: loadingView)
         } else {
             self.view.backgroundColor = UIColor.blackColor()
         }
-    }
-    
-    func removeBlur() {
-        blurView?.removeFromSuperview()
     }
 }
 
@@ -198,23 +211,5 @@ extension LoginViewController {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.CGRectValue().height
-    }
-    
-    // Tap Gesture Recognizer Delegate
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        
-        return usernameField!.isFirstResponder() || passwordField!.isFirstResponder()
-    }
-    
-    // Dismiss keyboard on tap
-    func handleSingleTap(recognizer: UIGestureRecognizer) {
-        
-        view.endEditing(true)
-        
-        // Set the origin back to original origin
-        if view.frame.origin.y != lastKeyboardOffset {
-            
-            view.frame.origin.y = lastKeyboardOffset
-        }
     }
 }

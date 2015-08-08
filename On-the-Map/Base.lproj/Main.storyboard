@@ -351,7 +351,6 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="backgroundView" destination="aHm-en-mrE" id="zwA-fP-SLl"/>
                         <outlet property="debugLabel" destination="rdN-mb-Rm1" id="EjT-Ah-4Xb"/>
                         <outlet property="loadingView" destination="2rI-bp-m7U" id="fa5-LU-PbR"/>
                         <outlet property="loginButton" destination="iOe-N3-ncg" id="5D1-d2-hQg"/>

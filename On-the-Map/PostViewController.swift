@@ -9,9 +9,9 @@
 import UIKit
 import MapKit
 
-class PostViewController: UIViewController {
+class PostViewController: UIViewController, UITextFieldDelegate {
     
-// MARK: -Outlets
+// MARK: - Outlets
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var section1: UIView!
@@ -25,6 +25,13 @@ class PostViewController: UIViewController {
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+// MARK: - Variables
+    var keyboardAdjusted = false
+    var lastKeyboardOffset: CGFloat = 0.0
+    
+    //Text field delegate objects
+    let textDelegate = TextFieldDelegate()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -37,6 +44,10 @@ class PostViewController: UIViewController {
     
         // Activity indicator
         activityIndicator.hidesWhenStopped = true
+        
+        //Text field delegates
+        self.locationTextField.delegate = textDelegate
+        self.linkTextField.delegate = textDelegate
     }
 
     
@@ -165,5 +176,40 @@ class PostViewController: UIViewController {
     func returnTransparency() {
         self.mapView.alpha = 1.0
         submitButton.alpha = 1.0
+    }
+}
+
+// MARK: - Keyboard Methods
+extension PostViewController {
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if keyboardAdjusted == false {
+            lastKeyboardOffset = getKeyboardHeight(notification) / 2
+            self.view.superview?.frame.origin.y -= lastKeyboardOffset
+            keyboardAdjusted = true
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        if keyboardAdjusted == true {
+            self.view.superview?.frame.origin.y += lastKeyboardOffset
+            keyboardAdjusted = false
+        }
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
     }
 }
