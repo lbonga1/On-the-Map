@@ -21,7 +21,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var closeButton: UIBarButtonItem!
 
 // MARK: - Variables
-    var locations = Data.sharedInstance().locations
     var annotations = [MKPointAnnotation]()
     
     override func viewDidLoad() {
@@ -122,7 +121,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func getStudentLocations() {
         OTMClient.sharedInstance().getStudentLocations { locations, errorString -> Void in
             if let locations = locations {
-                self.locations = locations
+                Data.sharedInstance().locations = locations
                 self.displayMap()
             } else {
                 self.displayError("Error fetching locations", errorString: errorString!)
@@ -144,7 +143,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func displayMap() {
         dispatch_async(dispatch_get_main_queue()) {
             
-            for dictionary in self.locations {
+            for dictionary in Data.sharedInstance().locations {
                 
                 let lat = CLLocationDegrees(dictionary.latitude as Double)
                 let long = CLLocationDegrees(dictionary.longitude as Double)

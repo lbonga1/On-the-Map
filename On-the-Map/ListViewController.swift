@@ -18,8 +18,6 @@ class ListViewController: UITableViewController {
     @IBOutlet var closeButton: UIBarButtonItem!
     @IBOutlet var listView: UITableView!
     
-// MARK: - Variables
-    var studentLocations = Data.sharedInstance().locations
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +85,7 @@ class ListViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cellReuseIdentifier = "Student List"
-        let location = studentLocations[indexPath.row]
+        let location = Data.sharedInstance().locations[indexPath.row]
         var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as! UITableViewCell
         
         let firstName = location.firstName
@@ -104,7 +102,7 @@ class ListViewController: UITableViewController {
     
     // Retrieves number of rows.
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if studentLocations == nil {
+        if Data.sharedInstance().locations == nil {
             self.getStudentLocations()
         }
         return Data.sharedInstance().locations.count
@@ -113,7 +111,7 @@ class ListViewController: UITableViewController {
     // Opens URL in browser when row is tapped.
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let location = studentLocations[indexPath.row]
+        let location = Data.sharedInstance().locations[indexPath.row]
         let mediaURL = location.mediaURL
         UIApplication.sharedApplication().openURL(NSURL(string: mediaURL)!)
         
@@ -125,7 +123,7 @@ class ListViewController: UITableViewController {
     func getStudentLocations() {
         OTMClient.sharedInstance().getStudentLocations { locations, errorString in
             if let locations = locations {
-                self.studentLocations = locations
+                Data.sharedInstance().locations = locations
                 dispatch_async(dispatch_get_main_queue()) {
                     self.listView.reloadData()
                 }

@@ -53,17 +53,14 @@ extension OTMClient {
             // Send the desired value(s) to completion handler
             if let error = error {
                 completionHandler(success: false, errorString: "Please check you network connection and try again.")
-                println("error1")
             } else {
                 if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
                     if let userID = resultDictionary.valueForKey(OTMClient.JsonResponseKeys.UserID) as? String {
                         NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "UdacityUserID")
                         completionHandler(success: true, errorString: "successful")
-                        println("completed parse")
                     }
                 } else {
                     completionHandler(success: false, errorString: "Server error: Please try again.")
-                    println("error2")
                 }
             }
         }
