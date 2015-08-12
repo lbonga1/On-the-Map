@@ -43,7 +43,7 @@ extension OTMClient {
         let baseURL = Constants.ParseBaseURLSecure
         let method = ""
         let jsonBody: [String: AnyObject] = [
-            "unique key": NSUserDefaults.standardUserDefaults().stringForKey("UdacityUserID")!,
+            "uniqueKey": NSUserDefaults.standardUserDefaults().stringForKey("UdacityUserID")!,
             "firstName": Data.sharedInstance().userFirstName,
             "lastName": Data.sharedInstance().userLastName,
             "mapString": Data.sharedInstance().mapString,
