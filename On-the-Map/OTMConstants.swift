@@ -24,6 +24,7 @@ extension OTMClient {
         static let FacebookSession: String = "/session"
         static let UdacityData: String = "/users/"
         static let UpdatedAt: String = "?order=-updatedAt"
+        static let UpdateLocation: String = "/" + Data.sharedInstance().objectID
     }
     
     struct JsonResponseKeys {

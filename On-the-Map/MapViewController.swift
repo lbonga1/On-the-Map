@@ -74,16 +74,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // Gets post view controller
     @IBAction func postUserLocation(sender: AnyObject) {
-        OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
-            if success {
-                dispatch_async(dispatch_get_main_queue()) {
-                let storyboard = self.storyboard
-                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+        if Data.sharedInstance().objectID != nil {
+            self.displayErrorWithHandler("Location exists.", errorString: "Do you want to update your location or link?")
+        } else {
+            OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
+                if success {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let storyboard = self.storyboard
+                        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
         
-                self.presentViewController(controller, animated: true, completion: nil)
+                        self.presentViewController(controller, animated: true, completion: nil)
+                    }
+                } else {
+                    self.displayError("Could not handle request.", errorString: error)
                 }
-            } else {
-                self.displayError("Could not handle request.", errorString: error)
             }
         }
     }
@@ -135,6 +139,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
             let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default, handler: nil)
             alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    // Displays error message alert view with completion handler.
+    func displayErrorWithHandler(title: String, errorString: String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
+            let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default) { (action) in
+                let storyboard = self.storyboard
+                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
+                            
+                self.presentViewController(controller, animated: true, completion: nil)
+            }
+            let cancelAction = UIAlertAction (title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil)
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }

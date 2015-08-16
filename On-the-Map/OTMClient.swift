@@ -112,6 +112,42 @@ class OTMClient : NSObject {
         return task
     }
     
+    func taskForPutMethod(parameters: [String: AnyObject], baseURL: String, method: String, jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        // 1. Set the parameters
+        var parameters = [String: AnyObject]()
+        
+        // 2. Build the URL
+        let urlString = baseURL + method + OTMClient.escapedParameters(parameters)
+        let url = NSURL(string: urlString)!
+        
+        // 3. Configure the request
+        let request = NSMutableURLRequest(URL: url)
+        var jsonifyError: NSError? = nil
+        
+        request.HTTPMethod = "PUT"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(Constants.ParseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+        
+        // 4. Make the request
+        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+            // 5/6. Parse the data and use the data (happens in completion handler)
+            if let error = downloadError {
+                completionHandler(result: nil, error: downloadError)
+            } else {
+                OTMClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            }
+        }
+        
+        // 7. Start the request
+        task.resume()
+        
+        return task
+        
+    }
+    
         
 // MARK: - Helpers
     

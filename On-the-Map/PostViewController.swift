@@ -87,6 +87,14 @@ class PostViewController: UIViewController, UITextFieldDelegate {
     @IBAction func postLocation(sender: AnyObject) {
         if linkTextField.text.isEmpty {
             displayError("Link required", errorString: "Please enter a website link to share.")
+        } else if Data.sharedInstance().objectID != nil {
+            OTMClient.sharedInstance().updateLocation { (success, error) -> Void in
+                if success {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    self.displayError("Could not post location", errorString: error!)
+                }
+            }
         } else {
             Data.sharedInstance().mediaURL = linkTextField.text
             OTMClient.sharedInstance().postLocation { (success, error) -> Void in

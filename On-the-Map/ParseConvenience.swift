@@ -66,5 +66,35 @@ extension OTMClient {
             }
         }
     }
+    
+    func updateLocation(completionHandler: (success: Bool, error: String?) -> Void) {
+        
+        // Set the variables
+        var parameters = [String: AnyObject]()
+        let baseURL = Constants.ParseBaseURLSecure
+        let method = Methods.UpdateLocation
+        let jsonBody: [String: AnyObject] = [
+            "uniqueKey": NSUserDefaults.standardUserDefaults().stringForKey("UdacityUserID")!,
+            "firstName": Data.sharedInstance().userFirstName,
+            "lastName": Data.sharedInstance().userLastName,
+            "mapString": Data.sharedInstance().mapString,
+            "mediaURL": Data.sharedInstance().mediaURL,
+            "latitude": Data.sharedInstance().region.center.latitude,
+            "longitude": Data.sharedInstance().region.center.longitude
+        ]
+        
+        self.taskForPutMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
+            // Send the desired value(s) to completion handler
+            if let error = error {
+                completionHandler(success: false, error: "Please check your network connection and try again.")
+            } else {
+                if let results = result.valueForKey(OTMClient.JsonResponseKeys.UpdatedAt) as? String {
+                    completionHandler(success: true, error: "successful")
+                } else {
+                    completionHandler(success: false, error: "Please try again.")
+                }
+            }
+        }
+    }
 }
 
