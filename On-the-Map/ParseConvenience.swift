@@ -17,7 +17,7 @@ extension OTMClient {
         // Set the variables
         let parameters = [String: AnyObject]()
         let baseURL = Constants.ParseBaseURLSecure
-        let method = ""
+        let method = Methods.UpdatedAt
         let key = ""
         
         self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in

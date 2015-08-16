@@ -23,6 +23,7 @@ extension OTMClient {
         static let UdacitySession: String = "/session"
         static let FacebookSession: String = "/session"
         static let UdacityData: String = "/users/"
+        static let UpdatedAt: String = "?order=-updatedAt"
     }
     
     struct JsonResponseKeys {
