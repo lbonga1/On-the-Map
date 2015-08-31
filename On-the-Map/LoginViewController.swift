@@ -18,7 +18,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var debugLabel: UILabel!
-    @IBOutlet weak var loginView: FBSDKLoginButton!
     @IBOutlet weak var loadingView: LoadingView!
     
 // Mark: - Variables
@@ -125,7 +124,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
 
 // MARK: - Additional methods
-    
     
     // Clears text fields and gets MapViewController.
     func completeLogin() {

@@ -125,12 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				1A6B04271B619751001FFE77 /* AppDelegate.swift */,
-				1A6B04511B6199B6001FFE77 /* View Controllers */,
-				1A5B98BD1B6F352E0050B635 /* Network */,
-				1A6B044F1B619917001FFE77 /* StudentLocations.swift */,
-				1A5B98BE1B6F35710050B635 /* Data.swift */,
-				1AB3A28F1B740EE600CEEA71 /* LoadingView.swift */,
-				1AB3A2911B757E6800CEEA71 /* TextFieldDelegate.swift */,
+				1A6CCD2A1B93FD56005A68CA /* Model */,
+				1A6CCD2B1B93FD83005A68CA /* View */,
+				1A6B04511B6199B6001FFE77 /* Controller */,
 				1A6B042B1B619751001FFE77 /* Main.storyboard */,
 				1A6B042E1B619751001FFE77 /* Images.xcassets */,
 				1A6B04301B619751001FFE77 /* LaunchScreen.xib */,
@@ -164,7 +161,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1A6B04511B6199B6001FFE77 /* View Controllers */ = {
+		1A6B04511B6199B6001FFE77 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				1A6B04291B619751001FFE77 /* LoginViewController.swift */,
@@ -173,7 +170,26 @@
 				1A6B04491B619879001FFE77 /* ListViewController.swift */,
 				1A58C7651B7185220056FBFC /* WebViewController.swift */,
 			);
-			name = "View Controllers";
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1A6CCD2A1B93FD56005A68CA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1A6B044F1B619917001FFE77 /* StudentLocations.swift */,
+				1A5B98BE1B6F35710050B635 /* Data.swift */,
+				1AB3A2911B757E6800CEEA71 /* TextFieldDelegate.swift */,
+				1A5B98BD1B6F352E0050B635 /* Network */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1A6CCD2B1B93FD83005A68CA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1AB3A28F1B740EE600CEEA71 /* LoadingView.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

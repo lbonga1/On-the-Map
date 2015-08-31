@@ -25,6 +25,7 @@ class WebViewController: UIViewController {
     
 // MARK: - Actions
     
+    // Dismiss the WebView
     @IBAction func dismissWebView(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }

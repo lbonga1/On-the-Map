@@ -119,7 +119,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    // MARK: - Additional methods
+// MARK: - Additional methods
     
     // Gets student location pins.
     func getStudentLocations() {
