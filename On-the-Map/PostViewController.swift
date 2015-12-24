@@ -57,7 +57,7 @@ class PostViewController: UIViewController, UITextFieldDelegate {
     @IBAction func verifyLink(sender: AnyObject) {
         Data.sharedInstance().testLink = linkTextField.text
         
-        let webViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WebView") as! UIViewController
+        let webViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WebView") 
         
         presentViewController(webViewController, animated: true, completion: nil)
     }
@@ -68,15 +68,15 @@ class PostViewController: UIViewController, UITextFieldDelegate {
         self.makeTransparent()
         activityIndicator.startAnimating()
         
-        var location = locationTextField.text
-        var geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-            if let error = error {
+        let location = locationTextField.text
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(location!, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+            if error != nil {
                 self.displayError("Could not find location", errorString: "Enter location as City, State, Country or Zipcode.")
                 self.activityIndicator.stopAnimating()
                 self.returnTransparency()
             } else {
-                self.addUserLocation(placemarks)
+                self.addUserLocation(placemarks!)
                 self.activityIndicator.stopAnimating()
                 self.returnTransparency()
             }
@@ -85,7 +85,7 @@ class PostViewController: UIViewController, UITextFieldDelegate {
     
     // Posts user location to Parse server.
     @IBAction func postLocation(sender: AnyObject) {
-        if linkTextField.text.isEmpty {
+        if linkTextField.text!.isEmpty {
             displayError("Link required", errorString: "Please enter a website link to share.")
         } else if Data.sharedInstance().objectID != nil {
             OTMClient.sharedInstance().updateLocation { (success, error) -> Void in
@@ -139,9 +139,9 @@ class PostViewController: UIViewController, UITextFieldDelegate {
         
         for placemark in placemarks {
             
-            let coordinate: CLLocationCoordinate2D = placemark.location.coordinate
-            let latitude: CLLocationDegrees = placemark.location.coordinate.latitude
-            let longitude: CLLocationDegrees = placemark.location.coordinate.longitude
+            let coordinate: CLLocationCoordinate2D = placemark.location!.coordinate
+            //let latitude: CLLocationDegrees = placemark.location!.coordinate.latitude
+            //let longitude: CLLocationDegrees = placemark.location!.coordinate.longitude
             let span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
             
             regions.append(MKCoordinateRegion(center: coordinate, span: span))

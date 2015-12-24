@@ -128,7 +128,6 @@
 				1A6CCD2A1B93FD56005A68CA /* Model */,
 				1A6CCD2B1B93FD83005A68CA /* View */,
 				1A6B04511B6199B6001FFE77 /* Controller */,
-				1A6B042B1B619751001FFE77 /* Main.storyboard */,
 				1A6B042E1B619751001FFE77 /* Images.xcassets */,
 				1A6B04301B619751001FFE77 /* LaunchScreen.xib */,
 				1A6B04251B619751001FFE77 /* Supporting Files */,
@@ -187,6 +186,7 @@
 		1A6CCD2B1B93FD83005A68CA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A6B042B1B619751001FFE77 /* Main.storyboard */,
 				1AB3A28F1B740EE600CEEA71 /* LoadingView.swift */,
 			);
 			name = View;
@@ -236,7 +236,9 @@
 		1A6B041A1B619751001FFE77 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Lauren Bongartz";
 				TargetAttributes = {
 					1A6B04211B619751001FFE77 = {
@@ -368,6 +370,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -439,6 +442,7 @@
 				);
 				INFOPLIST_FILE = "On-the-Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.udacity.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -454,6 +458,7 @@
 				);
 				INFOPLIST_FILE = "On-the-Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.udacity.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -462,16 +467,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "On-the-MapTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.udacity.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On-the-Map.app/On-the-Map";
 			};
@@ -481,12 +483,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = "On-the-MapTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.udacity.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On-the-Map.app/On-the-Map";
 			};

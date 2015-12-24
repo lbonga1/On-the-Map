@@ -22,11 +22,11 @@ extension OTMClient {
         
         self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in
             // Send the desired value(s) to completion handler
-            if let error = error {
+            if let _ = error {
                 completionHandler(result: nil, errorString: "Please check your network connection, then tap refresh to try again.")
             } else {
                 if let results = result.valueForKey(OTMClient.JsonResponseKeys.Results) as? [[String : AnyObject]] {
-                    var studentLocations = StudentLocations.locationsFromResults(results)
+                    let studentLocations = StudentLocations.locationsFromResults(results)
                     completionHandler(result: studentLocations, errorString: "successful")
                 } else {
                     completionHandler(result: nil, errorString: "Server error. Please tap refresh to try again.")
@@ -39,7 +39,7 @@ extension OTMClient {
     func postLocation(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         // Set the variables
-        var parameters = [String: AnyObject]()
+        let parameters = [String: AnyObject]()
         let baseURL = Constants.ParseBaseURLSecure
         let method = ""
         let jsonBody: [String: AnyObject] = [
@@ -54,7 +54,7 @@ extension OTMClient {
         
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
             // Send the desired value(s) to completion handler
-            if let error = error {
+            if let _ = error {
                 completionHandler(success: false, errorString: "Please check your network connection and try again.")
             } else {
                 if let results = result.valueForKey(OTMClient.JsonResponseKeys.ObjectId) as? String {
@@ -67,10 +67,11 @@ extension OTMClient {
         }
     }
     
+    // Update posted location in Parse
     func updateLocation(completionHandler: (success: Bool, error: String?) -> Void) {
         
         // Set the variables
-        var parameters = [String: AnyObject]()
+        let parameters = [String: AnyObject]()
         let baseURL = Constants.ParseBaseURLSecure
         let method = Methods.UpdateLocation
         let jsonBody: [String: AnyObject] = [
@@ -85,10 +86,10 @@ extension OTMClient {
         
         self.taskForPutMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
             // Send the desired value(s) to completion handler
-            if let error = error {
+            if let _ = error {
                 completionHandler(success: false, error: "Please check your network connection and try again.")
             } else {
-                if let results = result.valueForKey(OTMClient.JsonResponseKeys.UpdatedAt) as? String {
+                if result.valueForKey(OTMClient.JsonResponseKeys.UpdatedAt) as? String != nil {
                     completionHandler(success: true, error: "successful")
                 } else {
                     completionHandler(success: false, error: "Please try again.")

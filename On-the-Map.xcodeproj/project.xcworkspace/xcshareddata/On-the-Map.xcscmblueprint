@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F3197258A189E1E799D03CA49177B95CAA5D832B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "1E5A728A4F4606FB12D5A3A873CE28511E690832" : 0,
+    "F3197258A189E1E799D03CA49177B95CAA5D832B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F9ABE0AE-6B55-4BBC-83C8-8800813ACAA5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "1E5A728A4F4606FB12D5A3A873CE28511E690832" : "On-the-MapOn-the-Map",
+    "F3197258A189E1E799D03CA49177B95CAA5D832B" : "On-the-Map"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "On-the-Map",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "On-the-Map.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lbonga1\/On-the-Map2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1E5A728A4F4606FB12D5A3A873CE28511E690832"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lbonga1\/On-the-Map.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F3197258A189E1E799D03CA49177B95CAA5D832B"
+    }
+  ]
+}

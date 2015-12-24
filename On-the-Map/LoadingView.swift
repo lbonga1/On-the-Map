@@ -14,7 +14,7 @@ class LoadingView: UIView {
     
     private var progressLabel: UILabel
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         progressLabel = UILabel()
         super.init(coder: aDecoder)
         createProgressLayer()
@@ -34,7 +34,7 @@ class LoadingView: UIView {
         progressLabel.textAlignment = .Center
         progressLabel.text = "Processing"
         progressLabel.font = UIFont(name: "Courier", size: 36.0)
-        progressLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        progressLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(progressLabel)
         
         addConstraint(NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: progressLabel, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
@@ -46,7 +46,7 @@ class LoadingView: UIView {
         let endAngle = CGFloat(M_PI * 2 + M_PI_2)
         let centerPoint = CGPointMake(CGRectGetWidth(frame)/2 , CGRectGetHeight(frame)/2)
         
-        var gradientMaskLayer = gradientMask()
+        let gradientMaskLayer = gradientMask()
         progressLayer.path = UIBezierPath(arcCenter:centerPoint, radius: CGRectGetWidth(frame)/2 - 30.0, startAngle:startAngle, endAngle:endAngle, clockwise: true).CGPath
         progressLayer.backgroundColor = UIColor.clearColor().CGColor
         progressLayer.fillColor = nil

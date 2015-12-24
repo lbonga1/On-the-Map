@@ -42,7 +42,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 // MARK: - MKMapViewDelegate
     
     // Creates a view with a "right callout accessory view".
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
@@ -52,7 +52,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinColor = .Red
-            pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else {
             pinView!.annotation = annotation
@@ -62,11 +62,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     // Opens the pin's URL in browser when tapped.
-    func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         if control == annotationView.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
-            app.openURL(NSURL(string: annotationView.annotation.subtitle!)!)
+            app.openURL(NSURL(string: annotationView.annotation!.subtitle!!)!)
         }
     }
     
@@ -80,7 +80,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
-                        let storyboard = self.storyboard
                         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
         
                         self.presentViewController(controller, animated: true, completion: nil)
@@ -148,7 +147,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
             let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default) { (action) in
-                let storyboard = self.storyboard
                 let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
                             
                 self.presentViewController(controller, animated: true, completion: nil)
@@ -177,7 +175,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 let mediaURL = dictionary.mediaURL as String
                 
                 // Create the annotation and set its properties.
-                var annotation = MKPointAnnotation()
+                let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
                 annotation.title = "\(first) \(last)"
                 annotation.subtitle = mediaURL

@@ -63,9 +63,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // Login with Udacity.
     @IBAction func userLogin(sender: AnyObject) {
-        if usernameField.text.isEmpty {
+        if usernameField.text!.isEmpty {
             debugLabel.text = "Please enter your email."
-        } else if passwordField.text.isEmpty {
+        } else if passwordField.text!.isEmpty {
             debugLabel.text = "Please enter your password."
         } else {
             usernameField.resignFirstResponder()
@@ -73,7 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.blurLoading()
             loadingView.hidden = false
             loadingView.animateProgressView()
-            OTMClient.sharedInstance().udacityLogin(usernameField.text, password: passwordField.text, completionHandler: { (success, errorString) -> Void in
+            OTMClient.sharedInstance().udacityLogin(usernameField.text!, password: passwordField.text!, completionHandler: { (success, errorString) -> Void in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.loadingView.hidden = true
@@ -174,7 +174,7 @@ extension LoginViewController {
         self.backgroundGradient!.colors = [colorTop, colorBottom]
         self.backgroundGradient!.locations = [0.0, 1.0]
         self.backgroundGradient!.frame = view.frame
-        self.view.layer.insertSublayer(self.backgroundGradient, atIndex: 0)}
+        self.view.layer.insertSublayer(self.backgroundGradient!, atIndex: 0)}
 }
 
 // Mark: - Keyboard Methods

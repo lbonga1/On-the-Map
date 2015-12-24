@@ -50,7 +50,6 @@ class ListViewController: UITableViewController {
             OTMClient.sharedInstance().getUserData { (success: Bool, error: String) -> Void in
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
-                        let storyboard = self.storyboard
                         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
                         
                         self.presentViewController(controller, animated: true, completion: nil)
@@ -90,18 +89,18 @@ class ListViewController: UITableViewController {
         
         let cellReuseIdentifier = "Student List"
         let location = Data.sharedInstance().locations[indexPath.row]
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
         
         let firstName = location.firstName
         let lastName = location.lastName
         let mediaURL = location.mediaURL
         
-        cell.textLabel!.text = "\(firstName) \(lastName)"
-        cell.detailTextLabel?.text = mediaURL
+        cell!.textLabel!.text = "\(firstName) \(lastName)"
+        cell!.detailTextLabel?.text = mediaURL
         
-        cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
+        cell!.imageView!.contentMode = UIViewContentMode.ScaleAspectFit
         
-        return cell
+        return cell!
     }
     
     // Retrieves number of rows.
@@ -152,7 +151,6 @@ class ListViewController: UITableViewController {
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title: title, message: errorString, preferredStyle: .Alert)
             let okAction = UIAlertAction (title: "OK", style: UIAlertActionStyle.Default) { (action) in
-                let storyboard = self.storyboard
                 let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Post View") as! PostViewController
                 
                 self.presentViewController(controller, animated: true, completion: nil)

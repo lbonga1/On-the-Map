@@ -15,7 +15,7 @@ extension OTMClient {
     func udacityLogin(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
     
         // Set the variables
-        var parameters = [String: AnyObject]()
+        let parameters = [String: AnyObject]()
         let baseURL = Constants.UdacityBaseURLSecure
         let method = Methods.UdacitySession
         let jsonBody = ["udacity": ["username": username, "password" : password]]
@@ -23,7 +23,7 @@ extension OTMClient {
         // Make the request
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
             // Send the desired value(s) to completion handler
-            if let error = error {
+            if let _ = error {
                 completionHandler(success: false, errorString: "Please check your network connection and try again.")
             } else {
                 if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
@@ -33,7 +33,7 @@ extension OTMClient {
                     }
                 } else {
                     completionHandler(success: false, errorString: "Username or password is incorrect.")
-                    println("Could not find \(JsonResponseKeys.Account) in \(result)")
+                    print("Could not find \(JsonResponseKeys.Account) in \(result)")
                 }
             }
         }
@@ -43,7 +43,7 @@ extension OTMClient {
     func loginWithFacebook(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         // Set the variables
-        var parameters = [String: AnyObject]()
+        let parameters = [String: AnyObject]()
         let baseURL = Constants.UdacityBaseURLSecure
         let method = Methods.UdacitySession
         let jsonBody = ["facebook_mobile": ["access_token": NSUserDefaults.standardUserDefaults().stringForKey("FBAccessToken")!]]
@@ -51,7 +51,7 @@ extension OTMClient {
         // Make the request
         self.taskForPOSTMethod(parameters, baseURL: baseURL, method: method, jsonBody: jsonBody) { result, error in
             // Send the desired value(s) to completion handler
-            if let error = error {
+            if let _ = error {
                 completionHandler(success: false, errorString: "Please check you network connection and try again.")
             } else {
                 if let resultDictionary = result.valueForKey(OTMClient.JsonResponseKeys.Account) as? NSDictionary {
@@ -70,7 +70,7 @@ extension OTMClient {
     func getUserData(completionHandler: (success: Bool, error: String) -> Void) {
         
         // Set the variables
-        var parameters = [String: AnyObject]()
+        let parameters = [String: AnyObject]()
         let baseURL = Constants.UdacityBaseURLSecure
         let method = Methods.UdacityData
         let key = NSUserDefaults.standardUserDefaults().stringForKey("UdacityUserID")!
@@ -78,7 +78,7 @@ extension OTMClient {
         // Make the request
         self.taskForGETMethod(parameters, baseURL: baseURL, method: method, key: key) { result, error in
             // Send the desired value(s) to completion handler
-            if let error = error {
+            if let _ = error {
                 completionHandler(success: false, error: "Please check your network connection and try again.")
             } else {
                 if let userDictionary = result.valueForKey(OTMClient.JsonResponseKeys.User) as? NSDictionary {
@@ -105,11 +105,11 @@ extension OTMClient {
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        for cookie in sharedCookieStorage.cookies as! [NSHTTPCookie] {
+        for cookie in sharedCookieStorage.cookies! {
             if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
         }
         if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-TOKEN")
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
         
         // Make the request
@@ -120,7 +120,7 @@ extension OTMClient {
                 completionHandler(success: false, error: "Could not logout.")
                 return
             }
-            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+            let _ = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
             completionHandler(success: true, error: nil)
         }
         task.resume()
